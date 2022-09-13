@@ -11,7 +11,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
 import React from "react";
-import { signInWithGoogle } from "../firebase/firebase";
+import { signInWithGoogle } from "../../firebase/firebase";
 
 function Login() {
 	const onSignInWithGoogleClick = () => {
