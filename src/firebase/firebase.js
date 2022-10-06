@@ -4,6 +4,7 @@ import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 // web app's Firebase configuration
+//USE SQL *********************************10/6/2022
 const firebaseConfig = {
 	apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
 	authDomain: `${process.env.REACT_APP_FIREBASE_AUTH_DOMAIN}`,
@@ -12,6 +13,7 @@ const firebaseConfig = {
 	messagingSenderId: `${process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID}`,
 	appId: `${process.env.REACT_APP_FIREBASE_APP_ID}`,
 };
+//setup SQL server ***************************10/6/2022
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -21,6 +23,7 @@ const auth = getAuth(app);
 const signInWithGoogle = () => {
 	signInWithPopup(auth, googleProvider)
 		.then((res) => {
+			console.log(res)
 			console.log(`${res.user.uid} signed in!`);
 		})
 		.catch((err) => {
