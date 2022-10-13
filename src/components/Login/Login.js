@@ -14,10 +14,16 @@ import React from "react";
 import { signInWithGoogle } from "../../firebase/firebase";
 
 function Login() {
-	const onSignInWithGoogleClick = () => {
-		signInWithGoogle();
+	const onSignInWithGoogleClick = async() => {
+		const responce = await fetch("http://localhost:8000/getAuthURL", {
+			mode: "cors"
+		})
+		const responceJson = await responce.json()
+		//window.location.assign(responceJson.url) 
+		console.log(responceJson)
+		console.log(responceJson.url)
 	};
-
+	//check for redirect 10/13/2022
 	return (
 		<Center bg="white" h="100vh">
 			<Box

@@ -1,3 +1,5 @@
+const session = require("express-session")
+const cors = require("cors")
 const path = require("path")
 const {google} = require("googleapis")
 const { GoogleAuth } = require("google-auth-library")
@@ -8,39 +10,43 @@ const port = 8000
 const { Sequelize, DataTypes } = require('sequelize');
 const { config } = require("process")
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+app.use(cors())
 
 // Option 1: Passing a connection URI
-const sequelize = new Sequelize('') // setup path for SQL*************10/6/2022
-const User = sequelize.define('User', {
-  // Model attributes are defined here
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  refreshToken: {
-    type: DataTypes.STRING
-    // allowNull defaults to true
-  }
-});
-const Config = sequelize.define("Config", {
-  Configjson: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
-});
-//setup key?
-User.belongsTo(Config);
-await sequelize.sync({ force: true });
+//const sequelize = new Sequelize('mysql://root:@localhost:5432/smartMirror') // setup path for SQL*************10/6/2022
+// const sequelize = new Sequelize('smartMirror', 'root', '', {
+//   host: 'localhost',
+//   dialect: "mysql"
+// });
+// const User = sequelize.define('User', {
+//   // Model attributes are defined here
+//   email: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   refreshToken: {
+//     type: DataTypes.STRING
+//     // allowNull defaults to true
+//   }
+// });
+
+// const Config = sequelize.define("Config", {
+//   Configjson: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   }
+// });
+// //setup key?
+// User.belongsTo(Config);
+// sequelize.sync({ force: true });
 //use init to extend tables
 // `sequelize.define` also returns the model
-console.log(User === sequelize.models.User); // true
-
 app.get('/getAuthURL', async (req, res) =>
 {
   const oauth2Client = new google.auth.OAuth2(
     "466562971638-fuaijn77ht334tv2i1n3nauu53jbknnj.apps.googleusercontent.com",
     "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",
-    "http://localhost:8000/auth/redirect"//define later
+    "http://localhost:3000/auth/redirect"//define later
   );
   
   // generate a url that asks permissions for Blogger and Google Calendar scopes
@@ -53,7 +59,9 @@ app.get('/getAuthURL', async (req, res) =>
     access_type: 'online',
   
     // If you only need one scope you can pass it as a string
-    scope: scopes
+    scope: scopes,
+    resave: false,
+    saveUninitialized: true
   });
 
   res.json({
