@@ -12,7 +12,6 @@ const { config } = require("process")
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
 app.use(cors())
 
-// Option 1: Passing a connection URI
 //const sequelize = new Sequelize('mysql://root:@localhost:5432/smartMirror') // setup path for SQL*************10/6/2022
 // const sequelize = new Sequelize('smartMirror', 'root', '', {
 //   host: 'localhost',
@@ -46,12 +45,17 @@ app.get('/getAuthURL', async (req, res) =>
   const oauth2Client = new google.auth.OAuth2(
     "466562971638-fuaijn77ht334tv2i1n3nauu53jbknnj.apps.googleusercontent.com",
     "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",
-    "http://localhost:3000/auth/redirect"//define later
+    "http://localhost:8000/auth/redirect"//define later
   );
   
   // generate a url that asks permissions for Blogger and Google Calendar scopes
   const scopes = [
-    'https://www.googleapis.com/auth/calendar'
+    'https://www.googleapis.com/auth/calendar',
+    'https://www.googleapis.com/auth/calendar.events',
+    'https://www.googleapis.com/auth/calendar.events.readonly',
+    'https://www.googleapis.com/auth/calendar.readonly',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile'
   ];
   
   const url = oauth2Client.generateAuthUrl({
@@ -70,30 +74,55 @@ app.get('/getAuthURL', async (req, res) =>
 
 })
 app.get("/auth/redirect", async (req, res, next) =>{
-  const refreshToken = req.query.refreshToken;
-  if(refreshToken){
+
+  const code = req.query.code;
+  if(code){
+    const oauth2Client = new google.auth.OAuth2(
+      "466562971638-fuaijn77ht334tv2i1n3nauu53jbknnj.apps.googleusercontent.com",
+      "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",
+      "http://localhost:8000/auth/redirect"
+    );
+    
+    //const {tokens} = await oauth2Client.getToken(code)
+    const result = await oauth2Client.getToken(code)
+    console.log(result)
+    
+    oauth2Client.setCredentials(result.tokens);
     req.session.login = true;
+    req.session.tokens = result.tokens;
+    //res.redirect("http://localhost:3000/")
+    //get email
+    let oauth2 = google.oauth2({
+      auth: oauth2Client,
+      version: 'v2'
+    });
+    let { data } = await oauth2.userinfo.get();
+    console.log(data)
+    req.session.googleUserInfo = data;
+    //save data in db?
+    
+    //check if email already exists
+    //if yes redirect
+    //else create then redirect
+    return res.redirect("https://www.google.com/");
   }
+  res.end();
   //TODO: check if login key exits ****
 })
-app.get('/', async (req, res) => {
-  const credentialspath = path.join(process.cwd(), "credentials.json")
-    const auth = new google.auth.GoogleAuth({
-        keyFile: credentialspath, 
-        scopes: [
-                  'https://www.googleapis.com/auth/calendar',
-                  'https://www.googleapis.com/auth/calendar.events',
-                  'https://www.googleapis.com/auth/calendar.events.readonly',
-                  'https://www.googleapis.com/auth/calendar.readonly',
+app.get('/calendar', async (req, res) => {
 
-                ]
-
-    })
-    const authclient = await auth.getClient()
+  const oauth2Client = new google.auth.OAuth2(
+    "466562971638-fuaijn77ht334tv2i1n3nauu53jbknnj.apps.googleusercontent.com",
+    "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",
+    "http://localhost:8000/auth/redirect"
+  );
+  const tokens = req.session.tokens;
+  oauth2Client.setCredentials(tokens);
+    // const authclient = await auth.getClient()
     const calendar = await google.calendar({
 
         version: "v3", 
-        auth: authclient
+        auth: oauth2Client
     })
     try{
         const date = new Date();

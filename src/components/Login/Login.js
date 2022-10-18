@@ -19,7 +19,7 @@ function Login() {
 			mode: "cors"
 		})
 		const responceJson = await responce.json()
-		//window.location.assign(responceJson.url) 
+		window.location.assign(responceJson.url) 
 		console.log(responceJson)
 		console.log(responceJson.url)
 	};
