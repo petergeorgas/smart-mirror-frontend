@@ -100,11 +100,14 @@ app.get("/auth/redirect", async (req, res, next) =>{
     console.log(data)
     req.session.googleUserInfo = data;
     //save data in db?
+    //create user obj
+    //setup user ID on frontend in URL
+
     
     //check if email already exists
     //if yes redirect
     //else create then redirect
-    return res.redirect("https://www.google.com/");
+    return res.redirect("http://localhost:3000/settings");
   }
   res.end();
   //TODO: check if login key exits ****
