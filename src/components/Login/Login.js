@@ -15,13 +15,14 @@ import { signInWithGoogle } from "../../firebase/firebase";
 
 function Login() {
 	const onSignInWithGoogleClick = async () => {
-		const responce = await fetch("http://localhost:8000/getAuthURL", {
-			mode: "cors",
-		});
-		const responceJson = await responce.json();
-		window.location.assign(responceJson.url);
-		console.log(responceJson);
+		const response = await fetch(
+			"http://localhost:3000/api/auth/getAuthURL",
+			{}
+		);
+
+		const responceJson = await response.json();
 		console.log(responceJson.url);
+		window.location.assign(responceJson.url);
 	};
 	//check for redirect 10/13/2022
 	return (

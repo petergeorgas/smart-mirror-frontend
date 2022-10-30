@@ -13,6 +13,8 @@ yarn.lock
 # env
 .env
 
+.next/
+
 # production
 /build
 
