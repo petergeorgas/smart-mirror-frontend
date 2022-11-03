@@ -1,6 +1,5 @@
-import Login from "../src/components/Login/Login";
-import Hello from "./hello";
+import Clock from "../src/components/Clock/Clock";
 
 export default function Home() {
-	return <Hello />;
+  return <Clock />;
 }
