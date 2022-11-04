@@ -15,14 +15,15 @@ import { signInWithGoogle } from "../../firebase/firebase";
 
 function Login() {
 	const onSignInWithGoogleClick = async () => {
-		const response = await fetch(
-			"http://localhost:3000/api/auth/getAuthURL",
-			{}
-		);
+		signInWithGoogle();
+		// const response = await fetch(
+		// 	"http://localhost:3000/api/auth/getAuthURL",
+		// 	{}
+		// );
 
-		const responceJson = await response.json();
-		console.log(responceJson.url);
-		window.location.assign(responceJson.url);
+		// const responceJson = await response.json();
+		// console.log(responceJson.url);
+		// window.location.assign(responceJson.url);
 	};
 	//check for redirect 10/13/2022
 	return (

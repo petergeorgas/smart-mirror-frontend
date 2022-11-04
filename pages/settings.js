@@ -1,4 +1,5 @@
 import React from "react";
+import { firestore, auth } from "../src/firebase/firebase";
 import {
   Center,
   Box,
@@ -9,6 +10,9 @@ import {
 } from "@chakra-ui/react";
 
 function Settings() {
+
+  console.log(firestore.listCollections());
+  console.log(auth);
   return (
     <Center bg="white" h="100vh">
       <Box
