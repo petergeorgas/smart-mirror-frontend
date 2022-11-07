@@ -1,4 +1,6 @@
 // Import the functions you need from the SDKs you need
+import { collection, query, where, getDocs } from "firebase/firestore";
+
 import { initializeApp } from "firebase/app";
 
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
@@ -13,6 +15,7 @@ const firebaseConfig = {
 	messagingSenderId: `${process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_MESSAGING_SENDER_ID}`,
 	appId: `${process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_APP_ID}`,
 };
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const googleProvider = new GoogleAuthProvider();
@@ -20,15 +23,16 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 
 const signInWithGoogle = () => {
-	signInWithPopup(auth, googleProvider)
-		.then((res) => {
-			console.log(res);
-			console.log(`${res.user.uid} signed in!`);
-		})
-		.catch((err) => {
-			console.log(err.message);
-		});
+	return signInWithPopup(auth, googleProvider)
+
 };
 
-export { signInWithGoogle, firestore, auth };
+const getSettingsByUserId = async (userId) => {
+	const q = query(collection(db, "settings"), where("userId", "==", userId));
+
+	const querySnapshot = await getDocs(q);
+	return querySnapshot
+}
+
+export { signInWithGoogle, getSettingsByUserId, firestore, auth };
 
