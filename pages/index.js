@@ -1,5 +1,4 @@
-import Clock from "../src/components/Clock/Clock";
-
+import Login from "../src/components/Login/Login";
 export default function Home() {
-  return <Clock />;
+	return <Login />;
 }

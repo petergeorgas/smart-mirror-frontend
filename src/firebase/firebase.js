@@ -8,13 +8,20 @@ import { getFirestore } from "firebase/firestore/lite";
 
 // web app's Firebase configuration
 const firebaseConfig = {
-	apiKey: `${process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_API_KEY}`,
-	authDomain: `${process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_AUTH_DOMAIN}`,
-	projectId: `${process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_PROJ_ID}`,
-	storageBucket: `${process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_STORAGE_BUCKET}`,
-	messagingSenderId: `${process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_MESSAGING_SENDER_ID}`,
-	appId: `${process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_APP_ID}`,
+	apiKey: "AIzaSyCxfhvJxzIYOgYdBwAX-rg5706mvTEzCuk",
+
+	authDomain: "smart-mirror-5b07a.firebaseapp.com",
+
+	projectId: "smart-mirror-5b07a",
+
+	storageBucket: "smart-mirror-5b07a.appspot.com",
+
+	messagingSenderId: "25461489481",
+
+	appId: "1:25461489481:web:5e26b26b154b75bd3a6498",
 };
+
+console.log(firebaseConfig);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -23,16 +30,14 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 
 const signInWithGoogle = () => {
-	return signInWithPopup(auth, googleProvider)
-
+	return signInWithPopup(auth, googleProvider);
 };
 
 const getSettingsByUserId = async (userId) => {
 	const q = query(collection(db, "settings"), where("userId", "==", userId));
 
 	const querySnapshot = await getDocs(q);
-	return querySnapshot
-}
+	return querySnapshot;
+};
 
 export { signInWithGoogle, getSettingsByUserId, firestore, auth };
-
