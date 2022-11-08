@@ -7,6 +7,7 @@ import {
 	Text,
 	VStack,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
@@ -14,15 +15,24 @@ import React from "react";
 import { signInWithGoogle } from "../../firebase/firebase";
 
 function Login() {
+	const router = useRouter()
 	const onSignInWithGoogleClick = async () => {
-		const response = await fetch(
-			"http://localhost:3000/api/auth/getAuthURL",
-			{}
-		);
+		try {
+			const res = await signInWithGoogle();
+			if (res.user) {
+				router.push("/settings");
+			}
+		} catch(e) {
+			console.log(e);
+		}
+		// const response = await fetch(
+		// 	"http://localhost:3000/api/auth/getAuthURL",
+		// 	{}
+		// );
 
-		const responceJson = await response.json();
-		console.log(responceJson.url);
-		window.location.assign(responceJson.url);
+		// const responceJson = await response.json();
+		// console.log(responceJson.url);
+		// window.location.assign(responceJson.url);
 	};
 	//check for redirect 10/13/2022
 	return (

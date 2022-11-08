@@ -1,6 +1,4 @@
-import Clock from "../src/components/Clock/Clock";
-import News from "../src/components/News/News";
-
+import Login from "../src/components/Login/Login";
 export default function Home() {
-	return <News />;
-}
+	return <Login />;
+
