@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { getSettingsByUserId } from "../../firebase/firebase";
 import {
   Center,
   Box,
@@ -7,6 +8,8 @@ import {
   Heading,
   Spacer,
   Checkbox,
+  Button,
+  Text,
 } from "@chakra-ui/react";
 
 function Settings({ user }) {
@@ -29,6 +32,10 @@ function Settings({ user }) {
 
     if (!showSettings) {
         return <div></div>
+    }
+
+    const abracadabrashowmirror = () => {
+      router.push("/MirrorDisplay");
     }
     
     // get settings object 
@@ -54,9 +61,31 @@ function Settings({ user }) {
               <Checkbox defaultChecked>Be Very cool</Checkbox>
               <Checkbox defaultChecked>Don't smell.</Checkbox>
             </VStack>
+            <GoToMirrorButton onclick={abracadabrashowmirror}/>
           </VStack>
         </Box>
       </Center>
+    );
+  }
+
+  function GoToMirrorButton(props) {
+    const { onclick } = props;
+
+    return (
+      <Button
+        onClick={onclick}
+        bg="white"
+        size="lg"
+        w={"full"}
+        variant="solid"
+        maxW={"md"}
+        border="1px"
+        borderColor="gray.300"
+      >
+        <Center>
+          <Text>Go To Mirror</Text>
+        </Center>
+      </Button>
     );
   }
 
