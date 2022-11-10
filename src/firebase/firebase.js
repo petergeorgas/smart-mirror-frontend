@@ -1,10 +1,10 @@
 // Import the functions you need from the SDKs you need
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 
 import { initializeApp } from "firebase/app";
 
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
-import { getFirestore } from "firebase/firestore/lite";
+import { getFirestore } from "firebase/firestore";
 
 // web app's Firebase configuration
 const firebaseConfig = {
@@ -33,11 +33,31 @@ const signInWithGoogle = () => {
 	return signInWithPopup(auth, googleProvider);
 };
 
+const createSettingsForUser = async (userId) => {
+	try {
+		await addDoc(collection(firestore, "settings_page"), {
+			// defaulting your settings values
+			userId,
+			workout: false,
+			clock: true,
+			sports: true
+		});
+	} catch(e) {
+		return false
+	}
+
+	return true;
+}
+
 const getSettingsByUserId = async (userId) => {
-	const q = query(collection(db, "settings"), where("userId", "==", userId));
+	const q = query(collection(firestore, "settings_page"), where("userId", "==", userId));
 
 	const querySnapshot = await getDocs(q);
-	return querySnapshot;
+	if (querySnapshot.docs.length > 0) {
+		return querySnapshot.docs[0].data();
+	} else {
+		return null;
+	}
 };
 
-export { signInWithGoogle, getSettingsByUserId, firestore, auth };
+export { signInWithGoogle, getSettingsByUserId, createSettingsForUser, firestore, auth };
