@@ -74,10 +74,10 @@ function App() {
       if (current_time === 0){
         rest_bool = true;
         if(imageNum < (current_workout.length - 2)) {  // Next interval so next workout
-          setDuration("Prepare For Next Workout");
           imageNum = imageNum + 1;
           setImage(current_workout[imageNum]);
           if (current_workout_names[imageNum] === 'Rest Time'){
+            setDuration("Prepare For Next Workout");
             setText(current_workout_names[imageNum]);
             rest_bool = true;
             current_time = rest_time;
@@ -85,6 +85,7 @@ function App() {
           else{
             setText("Workout " + (Math.floor(imageNum/2) + 1) + "/" + Math.round(current_workout.length / 2) + " " + current_workout_names[imageNum]);
             current_time = time_interval;
+            rest_bool = false;
           }
         }
         else {  //Workput is complete
