@@ -1,5 +1,4 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import "../src/components/Calendar/Calendar.css";
 
 function MyApp({ Component, pageProps }) {
 	return (
@@ -8,5 +7,5 @@ function MyApp({ Component, pageProps }) {
 		</ChakraProvider>
 	);
 }
-
+ 
 export default MyApp;
