@@ -34,7 +34,7 @@ function Calendar() {
 
     gapi.load("client", initiate);
 
-};
+
 
 useEffect(() => {
     const events = getEvents(calendarID, apiKey);
