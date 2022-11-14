@@ -4,8 +4,6 @@ import Schedules from "../src/components/Schedules/Schedules";
 import Map from "../src/components/Map/Map";
 import Calendar from "../src/components/Calendar/Calendar";
 
-
 export default function Home() {
-	return <Calendar />; 
+	return <Calendar />;
 }
-
