@@ -8,24 +8,34 @@ import {
   Spacer,
   Checkbox,
 } from "@chakra-ui/react";
+import { getSettingsByUserId } from "../../firebase/firebase";
+
+let timeout;  // Not a great solution using global variable try doing this with useState
 
 function Settings({ user }) {
     const [settings, setSettings] = useState({});
     const [showSettings, setShowSettings] = useState(false)
     const router = useRouter();
-  
+
     useEffect(() => {
+        clearTimeout(timeout);
         const getSettings = async () => {
-            const settings = await getSettingsByUserId(user.uid)
-            // console.log(settings)
-            setSettings(settings[0])
+          console.log("user.uid", user.uid)
+          const settings = await getSettingsByUserId(user.uid)
+          console.log("settings", settings)
+          setSettings(settings)
+          setShowSettings(true)
         }
+        console.log("settings page login", user)
         if (!user) {
+          timeout = setTimeout(() => { 
+            // debouncing redirect ...because firebase auth state change happens multiple timples after render
             router.push('/Login')
+          }, 1000)
         } else {
-            setShowSettings(true)
+            getSettings()
         }
-    }, []);
+    }, [user]);
 
     if (!showSettings) {
         return <div></div>
@@ -54,6 +64,13 @@ function Settings({ user }) {
               <Checkbox defaultChecked>Be Very cool</Checkbox>
               <Checkbox defaultChecked>Don't smell.</Checkbox>
             </VStack>
+          </VStack>
+          <VStack>
+          {settings.clock && <Box>
+            <div>Clock Component</div>
+          </Box>}
+          {settings.sports && <div>Sports Component</div>}
+          {settings.workout && <div>Workout Component</div>}
           </VStack>
         </Box>
       </Center>

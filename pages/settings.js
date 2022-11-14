@@ -1,8 +1,20 @@
+import { useState, useEffect } from "react";
 import Settings from "../src/components/Settings/Settings";
 import { firestore, auth } from "../src/firebase/firebase";
 
 export default function SettingsPage() {
-  const isLoggedIn = !!auth.currentUser;
+  const [user, setUser] = useState(auth.currentUser);
+
+  // Put this in a Context/Provider use Context API create an <FirebaseAuthProvider>
+  useEffect(() => {
+    auth.onAuthStateChanged(function(user) {
+      if (user) {
+        console.log("loggedIn", !!user)
+        setUser(user)
+
+      }
+    });
+  }, [])
   
-  return <Settings user={auth.currentUser}/>
+  return <Settings user={user}/>
 };

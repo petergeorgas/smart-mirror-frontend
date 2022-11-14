@@ -12,7 +12,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
 import React from "react";
-import { signInWithGoogle } from "../../firebase/firebase";
+import { signInWithGoogle, getSettingsByUserId, createSettingsForUser } from "../../firebase/firebase";
 
 function Login() {
 	const router = useRouter()
@@ -20,6 +20,13 @@ function Login() {
 		try {
 			const res = await signInWithGoogle();
 			if (res.user) {
+				const settings = await getSettingsByUserId(res.user.uid);
+				const hasSettings = !!settings;
+				if (!hasSettings) {
+					const success = await createSettingsForUser(res.user.uid)
+					console.log("success", true)
+				}
+
 				router.push("/settings");
 			}
 		} catch(e) {
