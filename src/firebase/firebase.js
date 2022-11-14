@@ -21,11 +21,25 @@ const firebaseConfig = {
 	appId: "1:25461489481:web:5e26b26b154b75bd3a6498",
 };
 
+const scopes = [
+	"https://www.googleapis.com/auth/calendar",
+	"https://www.googleapis.com/auth/calendar.events",
+	"https://www.googleapis.com/auth/calendar.events.readonly",
+	"https://www.googleapis.com/auth/calendar.readonly",
+	"https://www.googleapis.com/auth/userinfo.email",
+	"https://www.googleapis.com/auth/userinfo.profile",
+];
+
 console.log(firebaseConfig);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const googleProvider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider()
+	.addScope("https://www.googleapis.com/auth/calendar.events")
+	.addScope("https://www.googleapis.com/auth/calendar.readonly")
+	.addScope("https://www.googleapis.com/auth/userinfo.email")
+	.addScope("https://www.googleapis.com/auth/userinfo.profile");
+
 const auth = getAuth(app);
 const firestore = getFirestore(app);
 
@@ -40,17 +54,20 @@ const createSettingsForUser = async (userId) => {
 			userId,
 			workout: false,
 			clock: true,
-			sports: true
+			sports: true,
 		});
-	} catch(e) {
-		return false
+	} catch (e) {
+		return false;
 	}
 
 	return true;
-}
+};
 
 const getSettingsByUserId = async (userId) => {
-	const q = query(collection(firestore, "settings_page"), where("userId", "==", userId));
+	const q = query(
+		collection(firestore, "settings_page"),
+		where("userId", "==", userId)
+	);
 
 	const querySnapshot = await getDocs(q);
 	if (querySnapshot.docs.length > 0) {
@@ -60,4 +77,10 @@ const getSettingsByUserId = async (userId) => {
 	}
 };
 
-export { signInWithGoogle, getSettingsByUserId, createSettingsForUser, firestore, auth };
+export {
+	signInWithGoogle,
+	getSettingsByUserId,
+	createSettingsForUser,
+	firestore,
+	auth,
+};
