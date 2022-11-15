@@ -1,18 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Moment from 'moment';
 import {
-	ChakraProvider,
 	Center,
-	Heading,
 	Spacer,
 	Box,
-	Text,
-	Link,
+	Text, 
 	VStack,
-	Code,
-	Grid,
-	theme,
-	StackDivider,
 	HStack
 } from '@chakra-ui/react';
 
@@ -24,7 +17,6 @@ const options = {
 	headers: {
 		'X-RapidAPI-Key': '994b9686b6msh686468f028a70b5p126bb5jsn3e737efb88dd',
 		'X-RapidAPI-Host': 'nfl-schedule.p.rapidapi.com'
-
 	}
 };
 
@@ -36,12 +28,10 @@ function Schedules() {
 	const axios = require("axios");
 	const moment = require("moment");
 
-
-
 	const [AllInfo, setAllInfo] = React.useState(null);
 	const [GameCounter, setGameCounter] = React.useState(0);
+
 	const count = React.useRef(0);
-	const length = React.useRef(0);
 
 	useEffect(() => {
 
@@ -54,8 +44,6 @@ function Schedules() {
 			}
 		}).catch(function (error) {
 			console.error(error);
-
-
 		});
 	}, []);
 
@@ -63,15 +51,12 @@ function Schedules() {
 	useEffect(() => {
 		if (AllInfo != null) {
 			const interval = setInterval(() => {
-				console.log(AllInfo);
 				setGameCounter(count.current);
 				count.current = count.current + 1;
 				console.log(count);
 				if (count.current >= AllInfo.data.length) {
 					count.current = 0;
 				}
-
-
 			}, 2000);
 
 		}

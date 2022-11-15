@@ -1,20 +1,14 @@
 import {
-    ChakraProvider,
-    Center,
-    Heading,
-    Spacer,
     Box,
-    Text,
-    Link,
-    VStack,
-    Code,
-    Grid,
-    theme,
-    StackDivider,
-    HStack
 } from '@chakra-ui/react';
 
 function Map() {
+
+    const originid = "ChIJScxbM7-WMIgRZS4whoS0Zzw";
+    const destid = "ChIJn6btdMp4PIgRdbWVrQ87x_k";
+
+    const srcstring = `https://www.google.com/maps/embed/v1/directions?origin=place_id:${originid}&destination=place_id:${destid}&key=AIzaSyBzkJwRb9PUctHdPWU66dVgX6lpY288Fts `;
+
     return (
         <div bg="gray" h="100vh">
             <Box
@@ -31,7 +25,7 @@ function Map() {
                 style={{ border: 0 }}
                 loading="lazy"
                 allowFullScreen=""
-                src="https://www.google.com/maps/embed/v1/directions?origin=place_id:ChIJScxbM7-WMIgRZS4whoS0Zzw&destination=place_id:ChIJn6btdMp4PIgRdbWVrQ87x_k&key=AIzaSyBzkJwRb9PUctHdPWU66dVgX6lpY288Fts"
+                src={srcstring}
 
             >
             </Box>
