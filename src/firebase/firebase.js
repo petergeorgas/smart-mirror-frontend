@@ -1,5 +1,14 @@
 // Import the functions you need from the SDKs you need
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import {
+	collection,
+	query,
+	where,
+	getDocs,
+	getDoc,
+	addDoc,
+	doc,
+	setDoc,
+} from "firebase/firestore";
 
 import { initializeApp } from "firebase/app";
 
@@ -21,15 +30,6 @@ const firebaseConfig = {
 	appId: "1:25461489481:web:5e26b26b154b75bd3a6498",
 };
 
-const scopes = [
-	"https://www.googleapis.com/auth/calendar",
-	"https://www.googleapis.com/auth/calendar.events",
-	"https://www.googleapis.com/auth/calendar.events.readonly",
-	"https://www.googleapis.com/auth/calendar.readonly",
-	"https://www.googleapis.com/auth/userinfo.email",
-	"https://www.googleapis.com/auth/userinfo.profile",
-];
-
 console.log(firebaseConfig);
 
 // Initialize Firebase
@@ -41,6 +41,7 @@ const googleProvider = new GoogleAuthProvider()
 	.addScope("https://www.googleapis.com/auth/userinfo.profile");
 
 const auth = getAuth(app);
+
 const firestore = getFirestore(app);
 
 const signInWithGoogle = () => {
@@ -63,6 +64,25 @@ const createSettingsForUser = async (userId) => {
 	return true;
 };
 
+const addCalendarEvents = async (userId, calendarInfo) => {
+	const docRef = doc(firestore, "users", userId);
+
+	return setDoc(docRef, { calendarInfo });
+};
+
+const getCalendarInfo = async (userId) => {
+	const usersRef = doc(firestore, "users", userId);
+
+	const snapshot = await getDoc(usersRef);
+
+	if (snapshot.exists()) {
+		return snapshot.data();
+	}
+
+	console.log("SNAPSHOT DOESN'T EXIST!");
+	return null;
+};
+
 const getSettingsByUserId = async (userId) => {
 	const q = query(
 		collection(firestore, "settings_page"),
@@ -81,6 +101,8 @@ export {
 	signInWithGoogle,
 	getSettingsByUserId,
 	createSettingsForUser,
+	getCalendarInfo,
+	addCalendarEvents,
 	firestore,
 	auth,
 };

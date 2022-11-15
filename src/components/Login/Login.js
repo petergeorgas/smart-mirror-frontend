@@ -12,24 +12,46 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
 import React from "react";
-import { signInWithGoogle, getSettingsByUserId, createSettingsForUser } from "../../firebase/firebase";
+import {
+	signInWithGoogle,
+	getSettingsByUserId,
+	createSettingsForUser,
+	addCalendarEvents,
+} from "../../firebase/firebase";
+import { GoogleAuthProvider } from "firebase/auth";
 
 function Login() {
-	const router = useRouter()
+	const router = useRouter();
 	const onSignInWithGoogleClick = async () => {
 		try {
 			const res = await signInWithGoogle();
+			const credential = GoogleAuthProvider.credentialFromResult(res);
+
+			fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
+				headers: {
+					Authorization: `Bearer ${credential.accessToken}`,
+				},
+			})
+				.then((resp) => {
+					return resp.json();
+				})
+				.then((json) => {
+					return addCalendarEvents(res.user.uid, json);
+				})
+				.then(() => {
+					console.log("Successfully added calendar events!!");
+				});
 			if (res.user) {
 				const settings = await getSettingsByUserId(res.user.uid);
 				const hasSettings = !!settings;
 				if (!hasSettings) {
-					const success = await createSettingsForUser(res.user.uid)
-					console.log("success", true)
+					const success = await createSettingsForUser(res.user.uid);
+					console.log("success", true);
 				}
 
 				router.push("/settings");
 			}
-		} catch(e) {
+		} catch (e) {
 			console.log(e);
 		}
 		// const response = await fetch(
