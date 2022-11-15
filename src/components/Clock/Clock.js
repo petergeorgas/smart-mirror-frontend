@@ -50,15 +50,21 @@ function Clock(props) {
   const minutes = date.getMinutes();
 
   return (
-    <Box>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      h="100%"
+    >
       <Box display="flex" flexDirection="row" alignItems="baseline">
-        <Text w="265px" fontWeight="bold" fontSize="8xl">{`${
+        <Text fontSize="8xl" fontWeight="bold">{`${
           hours > 12 ? hours - 12 : hours
-        }:${minutes}`}</Text>
+        }:${minutes < 10 ? `0${minutes}` : minutes}`}</Text>
 
-        <Text fontSize="5xl">{hours >= 12 ? "pm" : "am"}</Text>
+        <Text>{hours >= 12 ? "pm" : "am"}</Text>
       </Box>
-      <Text fontSize="3xl">{`${days[date.getDay()]}, ${
+      <Text fontSize="xl">{`${days[date.getDay()]}, ${
         months[date.getMonth() - 1]
       } ${date.getDate()}, ${date.getFullYear()}
       `}</Text>
