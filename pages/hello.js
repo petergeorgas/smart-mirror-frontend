@@ -15,8 +15,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 export default function Hello() {
   const [currentName, setCurrentName] = useState(undefined);
+
+  const router = useRouter();
 
   const { sendMessage, lastMessage, readyState } = useWebSocket(
     "ws://localhost:8080/face",
@@ -32,8 +35,14 @@ export default function Hello() {
       },
       onMessage: (ev) => {
         console.log(ev);
+
         setTimeout(() => {
           setCurrentName(undefined);
+
+          // Nested self timeouts are so fucked up
+          setTimeout(() => {
+            router.push(`/mirror/${ev.data}`);
+          }, 400);
         }, 3000);
       },
       shouldReconnect: (closeEvent) => true,
