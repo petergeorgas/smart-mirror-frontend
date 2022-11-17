@@ -1,11 +1,12 @@
 import { ChakraProvider } from "@chakra-ui/react";
 
 function MyApp({ Component, pageProps }) {
-	return (
-		<ChakraProvider>
-			<Component {...pageProps} />
-		</ChakraProvider>
-	);
+  const testprops = [{ monkey: "tests" }];
+  return (
+    <ChakraProvider>
+      <Component {...pageProps} {...testprops} />
+    </ChakraProvider>
+  );
 }
- 
+
 export default MyApp;
