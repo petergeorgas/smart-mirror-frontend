@@ -56,6 +56,7 @@ const createSettingsForUser = async (userId) => {
       workout: false,
       clock: true,
       sports: true,
+      catImage: true
     });
   } catch (e) {
     return false;
@@ -110,12 +111,29 @@ const getSettingsByUserId = async (userId) => {
   }
 };
 
+const updateSettingsValueForUser = async (userId, settingsObject) => {
+  const q = query(
+    collection(firestore, "settings_page"),
+    where("userId", "==", userId)
+  );
+
+  const querySnapshot = await getDocs(q);
+  try {
+    const result = await setDoc(querySnapshot.docs[0].ref, settingsObject, { merge: true });
+    console.log("result", result)
+    return true;
+  } catch(e) {
+    console.log(e)
+    return false;
+  }
+}
 export {
   signInWithGoogle,
   getSettingsByUserId,
   createSettingsForUser,
   getCalendarInfo,
   getUser,
+  updateSettingsValueForUser,
   addCalendarEvents,
   firestore,
   auth,
