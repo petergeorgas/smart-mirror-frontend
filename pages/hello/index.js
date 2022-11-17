@@ -16,7 +16,7 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-export default function Hello() {
+export default function Hello(props) {
   const [currentName, setCurrentName] = useState(undefined);
 
   const router = useRouter();
@@ -41,7 +41,7 @@ export default function Hello() {
 
           // Nested self timeouts are so fucked up
           setTimeout(() => {
-            router.push(`/mirror/${ev.data}`);
+            router.push(`/mirror/RQQo7YZKGeT1EHgZPP1mMg2twJh2`);
           }, 400);
         }, 3000);
       },
