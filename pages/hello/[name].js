@@ -16,44 +16,27 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-export default function Hello() {
+export default function Hello(props) {
   const [currentName, setCurrentName] = useState(undefined);
 
   const router = useRouter();
 
-  const { sendMessage, lastMessage, readyState } = useWebSocket(
-    "ws://localhost:8080/face",
-    {
-      onOpen: () => {
-        console.log("ws connection opened!");
-      },
-      onClose: () => {
-        console.log("ws connection closed :(");
-      },
-      onError: () => {
-        console.log("err occurred");
-      },
-      onMessage: (ev) => {
-        console.log(ev);
-
-        setTimeout(() => {
-          setCurrentName(undefined);
-
-          // Nested self timeouts are so fucked up
-          setTimeout(() => {
-            router.push(`/mirror/${ev.data}`);
-          }, 400);
-        }, 3000);
-      },
-      shouldReconnect: (closeEvent) => true,
-    }
-  );
+  const { name, uid } = router.query;
 
   useEffect(() => {
-    if (readyState === ReadyState.OPEN && lastMessage !== null) {
-      setCurrentName(lastMessage.data);
+    // TODO: Check if RESET, FITNESS MODE, ETC...
+    if (name && uid) {
+      setCurrentName(name);
+      setTimeout(() => {
+        setCurrentName(undefined);
+
+        // Nested self timeouts are so fucked up
+        setTimeout(() => {
+          router.push(`/mirror/${uid}`);
+        }, 400);
+      }, 3000);
     }
-  }, [readyState, lastMessage]);
+  }, [name, router, uid]);
 
   return (
     <Center bg="black" h="100vh">
@@ -72,7 +55,7 @@ export default function Hello() {
                   color="white"
                   fontWeight="bold"
                   fontSize="8xl"
-                >{`Hello, ${lastMessage.data}!`}</Text>
+                >{`Hello, ${currentName}!`}</Text>
               </VStack>
             </motion.div>
           )}

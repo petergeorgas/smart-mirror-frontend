@@ -8,6 +8,7 @@ import {
   addDoc,
   doc,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 import { initializeApp } from "firebase/app";
@@ -50,7 +51,7 @@ const signInWithGoogle = () => {
 
 const createSettingsForUser = async (userId) => {
   try {
-    await addDoc(collection(firestore, "settings_page"), {
+    await updateDoc(collection(firestore, "settings_page"), {
       // defaulting your settings values
       userId,
       workout: false,
@@ -67,7 +68,7 @@ const createSettingsForUser = async (userId) => {
 const addCalendarEvents = async (userId, calendarInfo) => {
   const docRef = doc(firestore, "users", userId);
 
-  return setDoc(docRef, { calendarInfo });
+  return updateDoc(docRef, { calendarInfo });
 };
 
 const getCalendarInfo = async (userId) => {
