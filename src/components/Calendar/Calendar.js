@@ -12,8 +12,10 @@ function Calendar() {
 	useEffect(() => {
 		if (user) {
 			getCalendarInfo(user.uid).then((userData) => {
-				console.log(userData.calendarInfo.items);
-				setCalInfo(userData.calendarInfo.items);
+				if (userData.calendarInfo) {
+					console.log(userData.calendarInfo.items);
+					setCalInfo(userData.calendarInfo.items);
+				}
 			});
 		}
 	}, [user]);
