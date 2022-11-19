@@ -138,6 +138,24 @@ const getSettingsByUserId = async (userId) => {
 	}
 };
 
+const updateSettingsValueForUser = async (userId, settingsObject) => {
+	const q = query(
+		collection(firestore, "settings_page"),
+		where("userId", "==", userId)
+	);
+
+	const querySnapshot = await getDocs(q);
+	try {
+		const result = await setDoc(querySnapshot.docs[0].ref, settingsObject, {
+			merge: true,
+		});
+		console.log("result", result);
+		return true;
+	} catch (e) {
+		console.log(e);
+		return false;
+	}
+};
 export {
 	signInWithGoogle,
 	getSettingsByUserId,
@@ -149,6 +167,7 @@ export {
 	addPhotoLink,
 	updateName,
 	firestore,
+	updateSettingsValueForUser,
 	auth,
 	storage,
 };
