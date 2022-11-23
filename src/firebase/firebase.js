@@ -49,6 +49,7 @@ const signInWithGoogle = () => {
 };
 
 const createSettingsForUser = async (userId) => {
+<<<<<<< Updated upstream
   try {
     await addDoc(collection(firestore, "settings_page"), {
       // defaulting your settings values
@@ -63,6 +64,24 @@ const createSettingsForUser = async (userId) => {
   }
 
   return true;
+=======
+	try {
+		await updateDoc(collection(firestore, "settings_page"), {
+			// defaulting your settings values
+			userId,
+			workout: false,
+			clock: true,
+			sports: true,
+			startLocation: '',
+			endLocation: '',
+			workoutMode: false
+		});
+	} catch (e) {
+		return false;
+	}
+
+	return true;
+>>>>>>> Stashed changes
 };
 
 const addCalendarEvents = async (userId, calendarInfo) => {
