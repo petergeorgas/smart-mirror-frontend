@@ -4,9 +4,17 @@ import {
 	Center,
 	Box,
 	VStack,
+	HStack,
+	Input,
+	Button,
 	Heading,
+	Flex,
 	Spacer,
 	Checkbox,
+	Switch,
+	FormControl,
+	SimpleGrid,
+	FormLabel
 } from "@chakra-ui/react";
 import Clock from "../Clock/Clock";
 import News from "../News/News";
@@ -26,6 +34,9 @@ function Settings() {
 	const [clockSetting, setClockSetting] = useState(false);
 	const [sportsSetting, setSportsSetting] = useState(false);
 	const [name, setName] = useState(undefined);
+	const [startLocation, setStartLocation] = useState();
+	const [endLocation, setEndLocation] = useState();
+	const [workoutMode, setWorkoutMode] = useState();
 	const [catImageSetting, setCatImageSetting] = useState(false);
 	const router = useRouter();
 
@@ -42,6 +53,9 @@ function Settings() {
 					setClockSetting(settings.clock);
 					setSportsSetting(settings.sports);
 					setCatImageSetting(settings.catImage);
+					setStartLocation(settings.startLocation);
+					setEndLocation(settings.endLocation);
+					setWorkoutMode(settings.workoutMode);
 					setShowSettings(true);
 				});
 		} else if (!loading && !error && !user) {
@@ -59,7 +73,9 @@ function Settings() {
 		const success = await updateSettingsValueForUser(user.uid, settingsObject);
 		console.log("success", success);
 		if (success) {
-			setState();
+			if (setState) {
+				setState();
+			}
 		} else {
 			alert("It broke!");
 		}
@@ -76,14 +92,62 @@ function Settings() {
 				padding="10"
 			>
 				<VStack>
-					<Heading marginBottom="5">Settings</Heading>
+					<Heading as='h1' size='3xl'>Settings</Heading>
 					<Spacer />
-					<Name uid={user.uid} name={name} setName={setName} />
-					<VStack>
-						<Checkbox defaultChecked>Be Very cool</Checkbox>
-						<Checkbox defaultChecked>Don't smell.</Checkbox>
-					</VStack>
+
 				</VStack>
+				<Spacer />
+				<VStack>
+					<Heading as='h2' size='1xl'>Your Name</Heading>
+					<Spacer />
+					{/* needs to be the end location need to make prop for location */}
+					<Name uid={user.uid} name={name} setName={setName} />
+				</VStack>
+
+				<Spacer />
+				<VStack>
+					{/* needs to be the start location need to make prop for location */}
+					<Heading as='h2' size='1xl'>Start Location</Heading>
+					<HStack>
+						<Input
+							border="2px"
+							borderRadius="md"
+							borderColor="gray.100"
+							placeholder="Enter Address"
+							value={startLocation}
+							onChange={(e) => setStartLocation(e.target.value)}
+						/>
+						<Spacer />
+						<Button colorScheme="blue" onClick={() => {
+							updateSettingsState({
+								startLocation
+							})
+						}}>
+							Change
+						</Button>
+					</HStack>
+					<Heading as='h2' size='1xl'>End Location</Heading>
+					<HStack>
+
+						<Input
+							border="2px"
+							borderRadius="md"
+							borderColor="gray.100"
+							placeholder="Enter Address"
+							value={endLocation}
+							onChange={(e) => setEndLocation(e.target.value)}
+						/>
+						<Spacer />
+						<Button colorScheme="blue" onClick={() => {
+							updateSettingsState({
+								endLocation
+							})
+						}}>
+							Change
+						</Button>
+					</HStack>
+				</VStack>
+
 				<VStack>
 					<Checkbox
 						isChecked={clockSetting}
@@ -126,6 +190,19 @@ function Settings() {
 					</Checkbox>
 				</VStack>
 				<FaceUpload uid={user.uid} name={name} setName={setName} />
+				<Spacer />
+				<br />
+				<Flex align='center' >
+					<FormLabel htmlFor='isChecked'>Workout Mode:</FormLabel>
+					<Switch size='lg' isChecked={workoutMode} onChange={(e) => {
+						updateSettingsState(
+							{
+								workoutMode: e.target.checked,
+							},
+							setWorkoutMode.bind(this, e.target.checked)
+						);
+					}} />
+				</Flex>
 			</Box>
 		</Center>
 	);
