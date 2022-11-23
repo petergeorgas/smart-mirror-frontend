@@ -34,9 +34,9 @@ function News(props) {
   }, []);
 
   const topNewsStories = feed
-    ? feed.slice(0, 5).map((story) => {
+    ? feed.slice(0, 5).map((story, i) => {
         return (
-          <Box p={2} border="1px" borderRadius="lg" mb="2">
+          <Box key={i} p={2} border="1px" borderRadius="lg" mb="2">
             <Text
               fontSize="lg"
               noOfLines={2}
@@ -48,7 +48,7 @@ function News(props) {
 
   return (
     <VStack>
-      <Heading>Today's Top News</Heading>
+      <Heading>{"Today's Top News"}</Heading>
       <Box w="600px">{topNewsStories}</Box>
     </VStack>
   );
