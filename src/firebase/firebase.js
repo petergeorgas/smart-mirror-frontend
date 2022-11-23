@@ -60,6 +60,9 @@ const createSettingsForUser = async (userId) => {
 			workout: false,
 			clock: true,
 			sports: true,
+			startLocation: '',
+			endLocation: '',
+			workoutMode: false
 		});
 	} catch (e) {
 		return false;
