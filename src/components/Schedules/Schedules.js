@@ -46,7 +46,7 @@ function Schedules() {
 
   useEffect(() => {
     if (AllInfo != null) {
-      const interval = setInterval(() => {
+      setInterval(() => {
         console.log(AllInfo);
         setGameCounter(count.current);
         count.current = count.current + 1;
@@ -56,7 +56,7 @@ function Schedules() {
         }
       }, 2000);
     }
-  }, []);
+  }, [AllInfo]);
 
   return (
     <Center bg="gray" h="100vh">
