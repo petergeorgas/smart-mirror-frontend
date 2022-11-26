@@ -1,3 +1,4 @@
+import { Image } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 const height = "100px";
@@ -16,7 +17,7 @@ function Cat() {
 
   return (
     <div>
-      <img style={{ height: "100%", width: "100%" }} src={catUrl} />
+      <Image alt="random cat image" h="full" w="full" src={catUrl} />
     </div>
   );
 }
