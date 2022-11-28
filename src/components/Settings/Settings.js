@@ -16,8 +16,6 @@ import {
   SimpleGrid,
   FormLabel,
 } from "@chakra-ui/react";
-import Clock from "../Clock/Clock";
-import News from "../News/News";
 import {
   auth,
   createUserIfNotExists,
@@ -26,23 +24,23 @@ import {
 } from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import FaceUpload from "../FaceUpload/FaceUpload";
-import Name from "../Name/Name";
+import FaceUpload from "./FaceUpload";
+import Name from "./Name";
+import GridSettings from "./GridSettings"
 
 function Settings() {
   const [showSettings, setShowSettings] = useState(false);
-  const [clockSetting, setClockSetting] = useState(false);
-  const [sportsSetting, setSportsSetting] = useState(false);
   const [name, setName] = useState(undefined);
   const [startLocation, setStartLocation] = useState();
   const [endLocation, setEndLocation] = useState();
   const [workoutMode, setWorkoutMode] = useState();
-  const [catImageSetting, setCatImageSetting] = useState(false);
   const router = useRouter();
+  const [isShown, setIsShown] = useState(false);
 
   const [user, loading, error] = useAuthState(auth);
 
   useEffect(() => {
+	console.log(user)
     if (!loading && !error && user) {
       createUserIfNotExists(user.uid)
         .then(() => {
@@ -50,9 +48,6 @@ function Settings() {
         })
         .then((settings) => {
           setShowSettings(true);
-          setClockSetting(settings.clock);
-          setSportsSetting(settings.sports);
-          setCatImageSetting(settings.catImage);
           setStartLocation(settings.startLocation);
           setEndLocation(settings.endLocation);
           setWorkoutMode(settings.workoutMode);
@@ -81,6 +76,10 @@ function Settings() {
     }
   };
 
+  const onEditGrid = () => {
+		setIsShown(current => !current);
+  }
+
   return (
     <Center bg="white" h="100vh">
       <Box
@@ -88,7 +87,7 @@ function Settings() {
         borderColor="gray.300"
         borderRadius="md"
         color="black"
-        w="400px"
+        w="500px"
         padding="10"
       >
         <VStack>
@@ -96,129 +95,81 @@ function Settings() {
             Settings
           </Heading>
           <Spacer />
-        </VStack>
-        <Spacer />
-        <VStack>
-          <Heading as="h2" size="1xl">
-            Your Name
-          </Heading>
-          <Spacer />
-          {/* needs to be the end location need to make prop for location */}
-          <Name uid={user.uid} name={name} setName={setName} />
-        </VStack>
+		{!isShown && (
+		<Button colorScheme="blue" onClick={onEditGrid}>
+			Edit Grid
+		</Button>
+		)}
+		{isShown && (
+		<Button colorScheme="blue" onClick={onEditGrid}>
+			Back
+		</Button>
+		)}
 
-        <Spacer />
-        <VStack>
-          {/* needs to be the start location need to make prop for location */}
-          <Heading as="h2" size="1xl">
-            Start Location
-          </Heading>
-          <HStack>
-            <Input
-              border="2px"
-              borderRadius="md"
-              borderColor="gray.100"
-              placeholder="Enter Address"
-              value={startLocation}
-              onChange={(e) => setStartLocation(e.target.value)}
-            />
-            <Spacer />
-            <Button
-              colorScheme="blue"
-              onClick={() => {
-                updateSettingsState({
-                  startLocation,
-                });
-              }}
-            >
-              Change
-            </Button>
-          </HStack>
-          <Heading as="h2" size="1xl">
-            End Location
-          </Heading>
-          <HStack>
-            <Input
-              border="2px"
-              borderRadius="md"
-              borderColor="gray.100"
-              placeholder="Enter Address"
-              value={endLocation}
-              onChange={(e) => setEndLocation(e.target.value)}
-            />
-            <Spacer />
-            <Button
-              colorScheme="blue"
-              onClick={() => {
-                updateSettingsState({
-                  endLocation,
-                });
-              }}
-            >
-              Change
-            </Button>
-          </HStack>
         </VStack>
-
-        <VStack>
-          <Checkbox
-            isChecked={clockSetting}
-            onChange={(e) => {
-              updateSettingsState(
-                {
-                  clock: e.target.checked,
-                },
-                setClockSetting.bind(this, e.target.checked)
-              );
-            }}
-          >
-            Clock
-          </Checkbox>
-          <Checkbox
-            isChecked={sportsSetting}
-            onChange={(e) => {
-              updateSettingsState(
-                {
-                  sports: e.target.checked,
-                },
-                setSportsSetting.bind(this, e.target.checked)
-              );
-            }}
-          >
-            Sports News
-          </Checkbox>
-          <Checkbox
-            isChecked={catImageSetting}
-            onChange={(e) => {
-              updateSettingsState(
-                {
-                  catImage: e.target.checked,
-                },
-                setCatImageSetting.bind(this, e.target.checked)
-              );
-            }}
-          >
-            Cat Image
-          </Checkbox>
-        </VStack>
-        <FaceUpload uid={user.uid} name={name} setName={setName} />
-        <Spacer />
-        <br />
-        <Flex align="center">
-          <FormLabel htmlFor="isChecked">Workout Mode:</FormLabel>
-          <Switch
-            size="lg"
-            isChecked={workoutMode}
-            onChange={(e) => {
-              updateSettingsState(
-                {
-                  workoutMode: e.target.checked,
-                },
-                setWorkoutMode.bind(this, e.target.checked)
-              );
-            }}
-          />
-        </Flex>
+        <br/>
+		{isShown && (<GridSettings uid={user.uid} />)}
+		{!isShown && (
+			<VStack>
+							<Heading as="h2" size="1xl">
+			  Your Name
+			</Heading>
+			<Spacer />
+			{/* needs to be the end location need to make prop for location */}
+			<Name uid={user.uid} name={name} setName={setName} />
+			{/* needs to be the start location need to make prop for location */}
+			<Heading as="h2" size="1xl">
+			  Start Location
+			</Heading>
+			<HStack>
+			  <Input
+				border="2px"
+				borderRadius="md"
+				borderColor="gray.100"
+				placeholder="Enter Address"
+				value={startLocation}
+				onChange={(e) => setStartLocation(e.target.value)}
+			  />
+			  <Spacer />
+			  <Button
+				colorScheme="blue"
+				onClick={() => {
+				  updateSettingsState({
+					startLocation,
+				  });
+				}}
+			  >
+				Change
+			  </Button>
+			</HStack>
+			<Heading as="h2" size="1xl">
+			  End Location
+			</Heading>
+			<HStack>
+			  <Input
+				border="2px"
+				borderRadius="md"
+				borderColor="gray.100"
+				placeholder="Enter Address"
+				value={endLocation}
+				onChange={(e) => setEndLocation(e.target.value)}
+			  />
+			  <Spacer />
+			  <Button
+				colorScheme="blue"
+				onClick={() => {
+				  updateSettingsState({
+					endLocation,
+				  });
+				}}
+			  >
+				Change
+			  </Button>
+			</HStack>
+			<br/>
+			<FaceUpload uid={user.uid} name={name} setName={setName} />
+		  </VStack>
+		)}
       </Box>
     </Center>
   );
