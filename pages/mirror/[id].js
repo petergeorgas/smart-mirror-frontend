@@ -62,7 +62,14 @@ export default function MirrorPage() {
       return <Box key={i} bg="tomato" h="480px"></Box>;
     } else {
       return (
-        <Box key={i} bg="tomato" h="200px">
+        <Box
+          key={i}
+          bg="tomato"
+          h="480px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           {componentMap[item]}
         </Box>
       );
