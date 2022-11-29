@@ -1,4 +1,3 @@
-import './compliment.css';
 import { useEffect } from 'react';
 import React from 'react';
 
@@ -8,7 +7,7 @@ function capitalizeFirstLetterAndAddPeriod(string) {
   return string.charAt(0).toUpperCase() + string.slice(1) + '.';
 }
 
-function App() {
+function Compliment() {
   const [compliment, setCompliment] = React.useState('');
   useEffect(() => {
     url = 'https://complimentr.com/api';
@@ -23,12 +22,12 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div>
+      <header>
         <p>{compliment}</p>
       </header>
     </div>
   );
 }
 
-export default App;
+export default Compliment;

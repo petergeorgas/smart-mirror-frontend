@@ -62,7 +62,7 @@ const createSettingsForUser = async (userId) => {
 			sports: true,
 			startLocation: '',
 			endLocation: '',
-			workoutMode: false
+			workoutMode: false,
 		});
 	} catch (e) {
 		return false;
@@ -141,6 +141,12 @@ const getSettingsByUserId = async (userId) => {
 	}
 };
 
+const updateUserLayout = async (userId, layout) => {
+	const docRef = doc(firestore, "users", userId);
+
+	return updateDoc(docRef, { layout: layout });
+}
+
 const updateSettingsValueForUser = async (userId, settingsObject) => {
 	const q = query(
 		collection(firestore, "settings_page"),
@@ -173,4 +179,5 @@ export {
 	updateSettingsValueForUser,
 	auth,
 	storage,
+	updateUserLayout
 };
