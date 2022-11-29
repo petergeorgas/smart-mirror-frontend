@@ -39,7 +39,7 @@ function App() {
   const time_interval = 150000; // 2.5 min interval
   const rest_time = 15000; // 15 sec rest time
   // => 30 min workout time
-  var current_time = time_interval; // Track current time left in the workout
+  const [current_time, setCurrentTime] = React.useState(time_interval); // Track current time left in the workout
   const general_workout = [
     arm_circles,
     rest,
@@ -171,13 +171,22 @@ function App() {
   var imageNum = 0;
   var workout_over = false;
 
-  // Parameters that will need to be passed in
-  // var current_workout = general_workout;
-  // var current_workout_names = general_workout_names;
-  var current_workout = core_workout;
-  var current_workout_names = core_workout_names;
-  // var current_workout = yoga_poses;
-  // var current_workout_names = yoga_poses_names;
+  const router = useRouter();
+  const {workoutname} = router.query;
+
+  var current_workout, current_workout_names;
+
+  // Workout to execute
+  if(workoutname === 'coreworkout'){
+    current_workout = core_workout;
+    current_workout_names = core_workout_names;
+  } else if(workoutname === 'yogaworkout') {
+    current_workout = yoga_poses;
+    current_workout_names = yoga_poses_names;
+  } else {
+    current_workout = general_workout;
+    current_workout_names = general_workout_names;
+  }
 
   const [text, setText] = React.useState(
     "Workout " +
