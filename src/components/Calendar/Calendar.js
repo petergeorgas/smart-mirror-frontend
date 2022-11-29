@@ -49,19 +49,11 @@ function Calendar() {
 				break;
 			}
 			if (moment(mcurrentdate).isBefore(moment(calInfo[i].start.dateTime))) {
-				/*
-				list.push({ 'event': calInfo[i].summary });
-				list.push({ 'start': calInfo[i].start.dateTime });
-				list.push({ 'end': calInfo[i].end.dateTime });
-				*/
 
-				
 				events[count] = calInfo[i].summary;
 				startdate[count] = calInfo[i].start.dateTime;
 				enddate[count] = calInfo[i].end.dateTime;
 				count++;
-				
-				//console.log(list);
 			}
 			
 			i++;
