@@ -9,6 +9,7 @@ import { getUser, updateUserLayout } from "../../src/firebase/firebase";
 import Map from "../../src/components/Map/Map";
 import Schedules from "../../src/components/Schedules/Schedules";
 import Cat from "../../src/components/CatImage/catimage";
+import WebSocket from "../../src/components/WebSocket/WebSocket";
 
 const componentMap = {
   clock: <Clock />,
@@ -77,8 +78,10 @@ export default function MirrorPage() {
   });
 
   return (
-    <SimpleGrid columns={3} spacing={1}>
-      {components}
-    </SimpleGrid>
+    <WebSocket>
+      <SimpleGrid columns={3} spacing={1}>
+        {components}
+      </SimpleGrid>
+    </WebSocket>
   );
 }
