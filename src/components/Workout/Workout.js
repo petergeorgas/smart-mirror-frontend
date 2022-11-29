@@ -39,7 +39,7 @@ function App() {
   const time_interval = 150000; // 2.5 min interval
   const rest_time = 15000; // 15 sec rest time
   // => 30 min workout time
-  const [current_time, setCurrentTime] = React.useState(time_interval); // Track current time left in the workout
+  var current_time = time_interval; // Track current time left in the workout
   const general_workout = [
     arm_circles,
     rest,
