@@ -55,7 +55,6 @@ function Clock(props) {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      h="100%"
     >
       <Box display="flex" flexDirection="row" alignItems="baseline">
         <Text fontSize="8xl" fontWeight="bold">{`${
