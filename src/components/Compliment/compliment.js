@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import React from "react";
+import { Text } from "@chakra-ui/react";
 
 var url;
 
@@ -26,9 +27,9 @@ function Compliment() {
 
   return (
     <div>
-      <header>
-        <p>{compliment}</p>
-      </header>
+      <Text fontWeight="bold" fontSize={"4xl"}>
+        {compliment}
+      </Text>
     </div>
   );
 }
