@@ -64,7 +64,7 @@ function Clock(props) {
         <Text>{hours >= 12 ? "pm" : "am"}</Text>
       </Box>
       <Text fontSize="xl">{`${days[date.getDay()]}, ${
-        months[date.getMonth() - 1]
+        months[date.getMonth()]
       } ${date.getDate()}, ${date.getFullYear()}
       `}</Text>
     </Box>
