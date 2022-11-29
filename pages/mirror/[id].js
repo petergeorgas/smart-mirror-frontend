@@ -2,13 +2,13 @@
 import { SimpleGrid, Box, Center, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import Cat from "../../src/components/CatImage/Catimage";
 import Clock from "../../src/components/Clock/Clock";
 import Compliment from "../../src/components/Compliment/compliment";
-import Calendar from "../../src/components/Calendar/Calendar"
-import { getUser, updateUserLayout} from "../../src/firebase/firebase";
+import Calendar from "../../src/components/Calendar/Calendar";
+import { getUser, updateUserLayout } from "../../src/firebase/firebase";
 import Map from "../../src/components/Map/Map";
 import Schedules from "../../src/components/Schedules/Schedules";
+import Cat from "../../src/components/CatImage/catimage";
 
 const componentMap = {
   clock: <Clock />,
@@ -42,11 +42,11 @@ export default function MirrorPage() {
     if (id) {
       getUser(id).then((user) => {
         console.log(user.layout);
-        if(user.layout == null){
+        if (user.layout == null) {
           updateUserLayout(id, boxes);
-      }else{
+        } else {
           setBoxes(user.layout);
-      }
+        }
       });
     }
   }, [id]);
@@ -55,7 +55,7 @@ export default function MirrorPage() {
     <Center>
       <Text>Please go to "webaddress/Login" to edit your specific grid</Text>
     </Center>
-  )
+  );
 
   const components = boxes.map((item, i) => {
     if (item === "default") {
