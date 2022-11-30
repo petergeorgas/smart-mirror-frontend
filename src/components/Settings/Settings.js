@@ -15,6 +15,7 @@ import {
   FormControl,
   SimpleGrid,
   FormLabel,
+  Select
 } from "@chakra-ui/react";
 import {
   auth,
@@ -33,7 +34,8 @@ function Settings() {
   const [name, setName] = useState(undefined);
   const [startLocation, setStartLocation] = useState();
   const [endLocation, setEndLocation] = useState();
-  const [workoutMode, setWorkoutMode] = useState();
+  const [workoutMode, setWorkoutMode] = useState(false);
+  const [workoutType, setWorkoutType] = useState();
   const router = useRouter();
   const [isShown, setIsShown] = useState(false);
 
@@ -51,6 +53,7 @@ function Settings() {
           setStartLocation(settings.startLocation);
           setEndLocation(settings.endLocation);
           setWorkoutMode(settings.workoutMode);
+          setWorkoutType(settings.workoutType);
           setShowSettings(true);
         });
     } else if (!loading && !error && !user) {
@@ -64,13 +67,11 @@ function Settings() {
 
   // get settings object
 
-  const updateSettingsState = async (settingsObject, setState) => {
+  const updateSettingsState = async (settingsObject) => {
     const success = await updateSettingsValueForUser(user.uid, settingsObject);
     console.log("success", success);
     if (success) {
-      if (setState) {
-        setState();
-      }
+      return success;
     } else {
       alert("It broke!");
     }
@@ -80,6 +81,7 @@ function Settings() {
 		setIsShown(current => !current);
   }
 
+  console.log(workoutMode);
   return (
     <Center bg="white" h="100vh">
       <Box
@@ -166,10 +168,39 @@ function Settings() {
 				Change
 			  </Button>
 			</HStack>
+
 			<br/>
 			<FaceUpload uid={user.uid} name={name} setName={setName} />
-		  </VStack>
+		  <FormControl display='flex' alignItems='center'>
+        <FormLabel htmlFor='email-alerts' mb='0'>
+          Workout Mode
+        </FormLabel>
+        <Switch id='email-alerts' isChecked={workoutMode} onChange={(e) => {
+          setWorkoutMode(e.target.checked);
+          updateSettingsState({
+            workoutMode: e.target.checked,
+          });
+        }} />
+      </FormControl>
+      {workoutMode && <FormControl display='flex' alignItems='center'>
+        <FormLabel htmlFor='email-alerts' mb='0'>
+          Workout Type
+        </FormLabel>
+        <Select placeholder='Select Workout' value={workoutType} onChange={(e) => {
+          setWorkoutType(e.target.value);
+          updateSettingsState({
+            workoutType: e.target.value,
+          }, );
+        }}>
+          <option value='core'>Core Workout</option>
+          <option value='yoga'>Yoga</option>
+          <option value='general'>General</option>
+        </Select>
+      </FormControl>}
+
+      </VStack>
 		)}
+    
       </Box>
     </Center>
   );
