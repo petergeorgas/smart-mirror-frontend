@@ -27,7 +27,7 @@ function Compliment() {
 
   return (
     <div>
-      <Text fontWeight="bold" fontSize={"4xl"}>
+      <Text fontWeight="bold" fontSize={"4xl"} color="white">
         {compliment}
       </Text>
     </div>

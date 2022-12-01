@@ -34,7 +34,7 @@ const GridSettings = (props) => {
     const { uid } = props;
 
     const [CurrentSelection, setCurrentSelection] = useState(undefined);
-    const [SelectedGrid, setSelectedGrid] = useState(undefined);
+    const [SelectedGrid, setSelectedGrid] = useState(-1);
 
     const [boxes, setBoxes] = useState([
         "default",
@@ -65,9 +65,10 @@ const GridSettings = (props) => {
       }, [uid]);
 
 const onBoxClick = (item, i) => {
+    console.log(i, SelectedGrid, CurrentSelection, "Buttplug")
     if(SelectedGrid == i){
         setCurrentSelection('')
-        setSelectedGrid('')
+        setSelectedGrid(-1)
     } else {
         setCurrentSelection(componentMap[item])
         setSelectedGrid(i)
@@ -85,11 +86,11 @@ const onSelectionClick = (itemKey, i) => {
     updateUserLayout(uid, boxes)
     // This is where update DB with change
     setCurrentSelection('')
-    setSelectedGrid('')
+    setSelectedGrid(-1)
 }
 
 const ComptSelector = (
-<Select placeholder={CurrentSelection} size='lg' onChange={(e) => onSelectionClick(SelectedGrid, e.target.value)}>
+<Select mt="3" placeholder={CurrentSelection} size='lg' onChange={(e) => onSelectionClick(SelectedGrid, e.target.value)}>
     {Object.keys(componentMap).map((key) => {
         if(CurrentSelection == componentMap[key])
         return
@@ -124,7 +125,7 @@ const components = boxes.map((item, i) => {
         <SimpleGrid columns={3} spacing={1}>
             {components}
         </SimpleGrid>
-        {(SelectedGrid != '') && (
+        {(SelectedGrid != -1) && (
             ComptSelector
         )}
 
