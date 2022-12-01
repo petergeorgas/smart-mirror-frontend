@@ -1,10 +1,16 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
+import { WarningIcon } from "@chakra-ui/icons";
+import { useRef } from "react";
+import { Box, Portal } from "@chakra-ui/react";
 
 function WebSocket(props) {
 	const { children } = props;
 	const router = useRouter();
+	const [connIssue, setConnIssue] = useState(false);
+
+	const ref = useRef();
 
 	// TODO: Remove this?
 	const { lastJsonMessage, readyState } = useWebSocket(
@@ -12,12 +18,15 @@ function WebSocket(props) {
 		{
 			onOpen: () => {
 				console.log("ws connection opened!");
+				setConnIssue(false);
 			},
 			onClose: () => {
 				console.log("ws connection closed :(");
+				setConnIssue(true);
 			},
 			onError: () => {
 				console.log("err occurred");
+				setConnIssue(true);
 			},
 			onMessage: (ev) => {
 				console.log(ev);
@@ -44,7 +53,19 @@ function WebSocket(props) {
 		}
 	);
 
-	return <div>{children}</div>;
+	return (
+		<div>
+			{children}
+			{connIssue ? (
+				<>
+					<Portal containerRef={ref}>
+						<WarningIcon w={70} h={70} color="orange.400" />
+					</Portal>
+					<Box m={35} position="fixed" bottom={0} left={0} ref={ref}></Box>
+				</>
+			) : undefined}
+		</div>
+	);
 }
 
 export default WebSocket;
