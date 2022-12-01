@@ -19,9 +19,9 @@ function Map() {
                 borderRadius="md"
                 bg="gray.600"
                 color="white"
-                w="800px"
-                h="400px"
-                padding="10"
+                w="480px"
+                h="480px"
+                padding="0"
                 style={{ border: 0 }}
                 loading="lazy"
                 allowFullScreen=""

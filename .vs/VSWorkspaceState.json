@@ -3,7 +3,7 @@
     "",
     "\\src",
     "\\src\\components",
-    "\\src\\components\\Calendar",
+    "\\src\\components\\Compliment",
     "\\src\\components\\Map",
     "\\src\\components\\Schedules",
     "\\src\\components\\Settings",
@@ -11,6 +11,6 @@
     "\\src\\oath",
     "\\styles"
   ],
-  "SelectedNode": "\\src\\components\\Calendar\\PlaceId.js",
+  "SelectedNode": "\\src\\components\\Calendar\\Calendar.js",
   "PreviewInSolutionExplorer": false
 }

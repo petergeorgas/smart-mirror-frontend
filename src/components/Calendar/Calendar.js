@@ -26,7 +26,7 @@ function Calendar() {
 	var list = [];
 
 	var events = [];
-	events.push("Upcoming Events");
+	events.push("Name");
 	var startdate = [];
 	startdate.push("Start");
 	var enddate = [];
@@ -73,9 +73,12 @@ function Calendar() {
 
 	for (var k = 1; k < list.length+1; k++) {
 		events[k] = list[k-1].event;
-		startdate[k] = moment(list[k-1].start).format('dddd, MMMM Do, h:mm a');
-		enddate[k] = moment(list[k-1].end).format('dddd, MMMM Do, h:mm a');
+		startdate[k] = moment(list[k-1].start).format('ddd, MMM D, h:mm a');
+		enddate[k] = moment(list[k-1].end).format('ddd, MMM D, h:mm a');
 		if (k == 5) {
+			events.length = 6;
+			startdate.length = 6;
+			enddate.length = 6;
 			break;
 		}
 	}
@@ -93,33 +96,45 @@ function Calendar() {
 	i = 0;
 	return (
 
-		
-		<div className="App pt-4">
-		
-			<HStack spacing='100px'>
+		<Box
+			border="2px"
+			borderColor="gray.300"
+			borderRadius="md"
+			bg="gray.600"
+			color="white"
+			w="480px"
+			h="480px"
+			padding="30"
+		>
 
-			<VStack spacing='10px'>
+			<VStack spacing='30px'>
+			<Center>
+				Upcoming Events
+			</Center>
+			<HStack spacing='30px'>
+
+			<VStack spacing='40px'>
 			{events.map((events) => (
-				<li key={events}>{events}</li>
+				<div key={events}>{events}</div>
 			))}
 
 				</VStack>
-			<VStack spacing='10px'>
+			<VStack spacing='40px'>
 			{startdate.map((startdate) => (
-				<li key={startdate}>{startdate}</li>
+				<div key={startdate}>{startdate}</div>
 			))}
 
-					</VStack>
-				<VStack spacing='10px'>
-					{enddate.map((enddate) => (
-						<li key={enddate}>{enddate}</li>
-					))}
+			</VStack>
+			<VStack spacing='40px'>
+			{enddate.map((enddate) => (
+			<div key={enddate}>{enddate}</div>
+			))}
 					 
-					</VStack>
-			</HStack>
-			
-		</div>
-		
+			</VStack>
+				</HStack>
+				</VStack>
+
+		</Box>
 
 	);
 }
