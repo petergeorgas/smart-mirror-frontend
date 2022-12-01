@@ -1,34 +1,37 @@
-import './compliment.css';
-import { useEffect } from 'react';
-import React from 'react';
+import { useEffect } from "react";
+import React from "react";
+import { Text } from "@chakra-ui/react";
 
 var url;
 
 function capitalizeFirstLetterAndAddPeriod(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1) + '.';
+  return string.charAt(0).toUpperCase() + string.slice(1) + ".";
 }
 
-function App() {
-  const [compliment, setCompliment] = React.useState('');
+function Compliment() {
+  const [compliment, setCompliment] = React.useState("");
   useEffect(() => {
-    url = 'https://complimentr.com/api';
-    fetch(url).then(function(response) {
-      return response.json();
-    }).then(function(data) {
-      console.log(data);
-      setCompliment(capitalizeFirstLetterAndAddPeriod(data.compliment));
-    }).catch(function() {
-      console.log("Failed to retrieve compiment.");
-    });
+    url = "https://complimentr.com/api";
+    fetch(url)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        setCompliment(capitalizeFirstLetterAndAddPeriod(data.compliment));
+      })
+      .catch(function () {
+        console.log("Failed to retrieve compiment.");
+      });
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>{compliment}</p>
-      </header>
+    <div>
+      <Text fontWeight="bold" fontSize={"4xl"}>
+        {compliment}
+      </Text>
     </div>
   );
 }
 
-export default App;
+export default Compliment;

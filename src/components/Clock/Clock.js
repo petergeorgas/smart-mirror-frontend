@@ -55,7 +55,6 @@ function Clock(props) {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      h="100%"
     >
       <Box display="flex" flexDirection="row" alignItems="baseline">
         <Text fontSize="8xl" fontWeight="bold">{`${
@@ -65,7 +64,7 @@ function Clock(props) {
         <Text>{hours >= 12 ? "pm" : "am"}</Text>
       </Box>
       <Text fontSize="xl">{`${days[date.getDay()]}, ${
-        months[date.getMonth() - 1]
+        months[date.getMonth()]
       } ${date.getDate()}, ${date.getFullYear()}
       `}</Text>
     </Box>

@@ -1,13 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { SimpleGrid, Box } from "@chakra-ui/react";
+import { SimpleGrid, Box, Center, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import Cat from "../../src/components/CatImage/catimage";
 import Clock from "../../src/components/Clock/Clock";
-import { getUser } from "../../src/firebase/firebase";
+import Compliment from "../../src/components/Compliment/compliment";
+import Calendar from "../../src/components/Calendar/Calendar";
+import { getUser, updateUserLayout } from "../../src/firebase/firebase";
+import Map from "../../src/components/Map/Map";
+import Schedules from "../../src/components/Schedules/Schedules";
+import Cat from "../../src/components/CatImage/catimage";
+import WebSocket from "../../src/components/WebSocket/WebSocket";
 
 const componentMap = {
   clock: <Clock />,
+  cat: <Cat />,
+  compliment: <Compliment />,
+  calendar: <Calendar />,
+  map: <Map />,
+  schedules: <Schedules />,
 };
 
 export default function MirrorPage() {
@@ -16,11 +26,7 @@ export default function MirrorPage() {
 
   const [boxes, setBoxes] = useState([
     "default",
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
+    "edit",
     "default",
     "default",
     "default",
@@ -37,23 +43,34 @@ export default function MirrorPage() {
     if (id) {
       getUser(id).then((user) => {
         console.log(user.layout);
-        user?.layout.forEach((item) => {
-          console.log(item);
-          let newBoxes = [...boxes];
-
-          newBoxes[item.row * 4 + item.col] = item.componentName;
-          setBoxes(newBoxes);
-        });
+        if (user.layout == null) {
+          updateUserLayout(id, boxes);
+        } else {
+          setBoxes(user.layout);
+        }
       });
     }
   }, [id]);
 
+  const editPrompt = (
+    <Center>
+      <Text>Please go to "webaddress/Login" to edit your specific grid</Text>
+    </Center>
+  );
+
   const components = boxes.map((item, i) => {
     if (item === "default") {
-      return <Box key={i} bg="tomato" h="200px"></Box>;
+      return <Box key={i} bg="tomato" h="480px"></Box>;
     } else {
       return (
-        <Box key={i} bg="tomato" h="200px">
+        <Box
+          key={i}
+          bg="tomato"
+          h="480px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           {componentMap[item]}
         </Box>
       );
@@ -61,8 +78,10 @@ export default function MirrorPage() {
   });
 
   return (
-    <SimpleGrid columns={4} spacing={1}>
-      {components}
-    </SimpleGrid>
+    <WebSocket>
+      <SimpleGrid columns={3} spacing={1}>
+        {components}
+      </SimpleGrid>
+    </WebSocket>
   );
 }
