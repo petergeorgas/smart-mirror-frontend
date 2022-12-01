@@ -1,4 +1,3 @@
-import "./Workout.css";
 import { useEffect } from "react";
 import React from "react";
 import prettyMilliseconds from "pretty-ms";
@@ -34,8 +33,10 @@ import pose_8 from "./Exercises/upward_facing_dog.png";
 import pose_9 from "./Exercises/downward_facing_dog.png";
 import pose_10 from "./Exercises/seated_forward_bend.png";
 import goodjob from "./Exercises/good_job_gif.gif";
+import Image from "next/image";
 
-function App() {
+function Workout(props) {
+  const {workoutType} = props;
   const time_interval = 150000; // 2.5 min interval
   const rest_time = 15000; // 15 sec rest time
   // => 30 min workout time
@@ -171,16 +172,15 @@ function App() {
   var imageNum = 0;
   var workout_over = false;
 
-  const router = useRouter();
-  const {workoutname} = router.query;
-
   var current_workout, current_workout_names;
 
+  console.log(`workout ${workoutType}`)
+
   // Workout to execute
-  if(workoutname === 'coreworkout'){
+  if(workoutType === 'coreworkout'){
     current_workout = core_workout;
     current_workout_names = core_workout_names;
-  } else if(workoutname === 'yogaworkout') {
+  } else if(workoutType === 'yogaworkout') {
     current_workout = yoga_poses;
     current_workout_names = yoga_poses_names;
   } else {
@@ -201,7 +201,7 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (current_time === 0) {
-        const rest_bool = true;
+        var rest_bool = true;
         if (imageNum < current_workout.length - 2) {
           // Next interval so next workout
           imageNum = imageNum + 1;
@@ -243,11 +243,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>{text}</p>
-        <img src={image} className="App-logo" />
+        <Image src={image}></Image>
         <p>{duaration}</p>
       </header>
     </div>
   );
 }
 
-export default App;
+export default Workout;
