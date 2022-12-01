@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\pages",
+    "\\pages\\api",
+    "\\pages\\api\\auth",
+    "\\pages\\api\\rss",
+    "\\pages\\hello",
+    "\\public",
     "\\src",
     "\\src\\components",
-    "\\src\\components\\Compliment",
-    "\\src\\components\\Map",
-    "\\src\\components\\Schedules",
-    "\\src\\components\\Settings",
-    "\\src\\firebase",
-    "\\src\\oath",
-    "\\styles"
+    "\\src\\components\\WebSocket"
   ],
-  "SelectedNode": "\\src\\components\\Calendar\\Calendar.js",
+  "SelectedNode": "\\pages\\mirror\\[id].js",
   "PreviewInSolutionExplorer": false
 }

@@ -17,7 +17,7 @@ function Map() {
                 border="2px"
                 borderColor="gray.300"
                 borderRadius="md"
-                bg="gray.600"
+                bg="black"
                 color="white"
                 w="480px"
                 h="480px"
@@ -29,7 +29,7 @@ function Map() {
 
             >
             </Box>
-        //</div>
+        </div>
     );
 }
 
