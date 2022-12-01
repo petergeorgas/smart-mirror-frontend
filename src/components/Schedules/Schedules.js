@@ -51,38 +51,38 @@ function Schedules() {
                 setGameCounter(count.current);
                 count.current = count.current + 1;
                 console.log(count);
-                if (count.current >= AllInfo.data.length) {
+                if (count.current >= AllInfo.length) {
                     count.current = 0;
                 }
-            }, 2000);
+            }, 10000);
         }
     }, [AllInfo]);
 
     return (
-        <Center bg="gray" h="100vh">
+        
             <Box
-                border="2px"
+                border="0px"
                 borderColor="gray.300"
                 borderRadius="md"
-                bg="gray.600"
+                bg="black"
                 color="white"
                 w="480px"
                 h="480px"
                 padding="10"
             >
                 <VStack spacing={6} align="stretch">
-                    <Box h="80px" bg="gray.600">
+                    <Box h="80px" bg='black'>
                         <Center>
                             {" "}
-                            <Text fontSize="3xl">
+                            <Text fontSize="4xl">
                                 {" "}
-                                {AllInfo && AllInfo[GameCounter].name}{" "}
+                                {AllInfo && AllInfo[GameCounter]?.shortName}{" "}
                             </Text>{" "}
                         </Center>
                     </Box>
 
                     <Center>
-                        <HStack spacing="400px">
+                        <HStack spacing="150px">
                             <Box w="100px" h="100px">
                                 <Center>
                                     {" "}
@@ -100,7 +100,7 @@ function Schedules() {
                                     </Text>{" "}
                                 </Center>
                             </Box>
-                            <Box w="100px" h="100px" bg="gray.600">
+                            <Box w="100px" h="100px" bg="black">
                                 <Center>
                                     {" "}
                                     <Text fontSize="3xl">
@@ -122,7 +122,7 @@ function Schedules() {
 
                     <Spacer />
 
-                    <Box h="80px" bg="gray.600">
+                    <Box h="80px" bg="black">
                         <Center>
                             {" "}
                             {AllInfo &&
@@ -133,7 +133,7 @@ function Schedules() {
                     </Box>
                 </VStack>
             </Box>
-        </Center>
+       
     );
 }
 
