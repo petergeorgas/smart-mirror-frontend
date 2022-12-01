@@ -21,6 +21,7 @@ export default function WorkoutPage() {
 					h="100vh"
 					justifyContent="center"
 					alignItems="center"
+					bg="black"
 				>
 					<Workout workoutType={workout} />
 				</Flex>
