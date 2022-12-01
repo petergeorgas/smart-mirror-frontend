@@ -63,6 +63,7 @@ const createSettingsForUser = async (userId) => {
 			startLocation: '',
 			endLocation: '',
 			workoutMode: false,
+			workoutType: 'general'
 		});
 	} catch (e) {
 		return false;
