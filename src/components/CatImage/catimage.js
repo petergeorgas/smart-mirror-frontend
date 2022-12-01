@@ -1,21 +1,19 @@
-import { useEffect, useState } from 'react';
+import { Image } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
-const height = "100px"
+const height = "100px";
 
-function App() {
+function Cat() {
   const [catUrl, setCatUrl] = useState("");
 
-  useEffect(() => {
-    fetch('https://aws.random.cat/meow')
-    .then(res => res.json())
-    .then(data => {console.log(data);setCatUrl(data.file)})
-  }, []);
-
   return (
-    <div>
-      <img style={{height: "100%", width: "100%"}} src={catUrl}/>
-    </div>
+    <Image
+      alt="random cat image"
+      h="100%"
+      w="100%"
+      src="https://cataas.com/cat/says/%20"
+    />
   );
 }
 
-export default App;
+export default Cat;

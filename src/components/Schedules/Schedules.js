@@ -1,15 +1,22 @@
-import React, { useEffect, useState, useRef } from 'react';
-import Moment from 'moment';
+import React, { useEffect, useState, useRef } from "react";
+import moment from "moment";
 import {
+	ChakraProvider,
 	Center,
+	Heading,
 	Spacer,
 	Box,
-	Text, 
+	Text,
+	Link,
 	VStack,
+	Code,
+	Grid,
+	theme,
+	StackDivider,
 	HStack
 } from '@chakra-ui/react';
 
-
+import { Axios } from "axios";
 
 const options = {
 	method: 'GET',
@@ -19,7 +26,6 @@ const options = {
 		'X-RapidAPI-Host': 'nfl-schedule.p.rapidapi.com'
 	}
 };
-
 
 function Schedules() {
 
@@ -62,58 +68,83 @@ function Schedules() {
 		}
 	}, []);
 
+  return (
+    <Center bg="gray" h="100vh">
+      <Box
+        border="2px"
+        borderColor="gray.300"
+        borderRadius="md"
+        bg="gray.600"
+        color="white"
+        w="800px"
+        h="400px"
+        padding="10"
+      >
+        <VStack spacing={6} align="stretch">
+          <Box h="80px" bg="gray.600">
+            <Center>
+              {" "}
+              <Text fontSize="3xl">
+                {" "}
+                {AllInfo && AllInfo[GameCounter].name}{" "}
+              </Text>{" "}
+            </Center>
+          </Box>
 
-	return (
-		<Center bg="gray" h="100vh">
-			<Box
-				border="2px"
-				borderColor="gray.300"
-				borderRadius="md"
-				bg="gray.600"
-				color="white"
-				w="800px"
-				h="400px"
-				padding="10"
-			>
-				<VStack
+          <Center>
+            <HStack spacing="400px">
+              <Box w="100px" h="100px">
+                <Center>
+                  {" "}
+                  <Text fontSize="3xl">
+                    {" "}
+                    {AllInfo && AllInfo[GameCounter].awayTeam.name}{" "}
+                  </Text>{" "}
+                </Center>
+                <Spacer />
+                <Center>
+                  {" "}
+                  <Text fontSize="4xl">
+                    {" "}
+                    {AllInfo && AllInfo[GameCounter].awayTeam.score}{" "}
+                  </Text>{" "}
+                </Center>
+              </Box>
+              <Box w="100px" h="100px" bg="gray.600">
+                <Center>
+                  {" "}
+                  <Text fontSize="3xl">
+                    {" "}
+                    {AllInfo && AllInfo[GameCounter].homeTeam.name}{" "}
+                  </Text>{" "}
+                </Center>
+                <Spacer />
+                <Center>
+                  {" "}
+                  <Text fontSize="4xl">
+                    {" "}
+                    {AllInfo && AllInfo[GameCounter].homeTeam.score}{" "}
+                  </Text>{" "}
+                </Center>
+              </Box>
+            </HStack>
+          </Center>
 
-					spacing={6}
-					align='stretch'
-				>
+          <Spacer />
 
-					<Box h='80px' bg='gray.600'>
-						<Center> <Text fontSize='3xl'> {AllInfo && AllInfo.data[GameCounter].name} </Text> </Center>
-					</Box>
-
-					<Center>
-						<HStack spacing='400px'>
-							<Box w='100px' h='100px'>
-								<Center> <Text fontSize='3xl'> {AllInfo && AllInfo.data[GameCounter].awayTeam.name} </Text> </Center>
-								<Spacer />
-								<Center> <Text fontSize='4xl'> {AllInfo && AllInfo.data[GameCounter].awayTeam.score} </Text> </Center>
-							</Box>
-							<Box w='100px' h='100px' bg='gray.600'>
-								<Center> <Text fontSize='3xl'> {AllInfo && AllInfo.data[GameCounter].homeTeam.name} </Text> </Center>
-								<Spacer />
-								<Center> <Text fontSize='4xl'> {AllInfo && AllInfo.data[GameCounter].homeTeam.score} </Text> </Center>
-							</Box>
-						</HStack>
-					</Center>
-
-
-					<Spacer />
-
-					<Box h='80px' bg='gray.600'>
-						<Center> {AllInfo && moment(AllInfo.data[GameCounter].date).format('dddd, MMMM Do, h:mm a')}  </Center>
-					</Box>
-
-				</VStack>
-
-			</Box>
-		</Center>
-
-	);
-
+          <Box h="80px" bg="gray.600">
+            <Center>
+              {" "}
+              {AllInfo &&
+                moment(AllInfo[GameCounter].date).format(
+                  "dddd, MMMM Do, h:mm a"
+                )}{" "}
+            </Center>
+          </Box>
+        </VStack>
+      </Box>
+    </Center>
+  );
 }
 
 export default Schedules;

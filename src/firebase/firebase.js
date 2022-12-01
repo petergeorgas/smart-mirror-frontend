@@ -8,12 +8,14 @@ import {
 	addDoc,
 	doc,
 	setDoc,
+	updateDoc,
 } from "firebase/firestore";
 
 import { initializeApp } from "firebase/app";
 
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // web app's Firebase configuration
 const firebaseConfig = {
@@ -44,18 +46,24 @@ const auth = getAuth(app);
 
 const firestore = getFirestore(app);
 
+const storage = getStorage(app);
+
 const signInWithGoogle = () => {
 	return signInWithPopup(auth, googleProvider);
 };
 
 const createSettingsForUser = async (userId) => {
 	try {
-		await addDoc(collection(firestore, "settings_page"), {
+		await updateDoc(collection(firestore, "settings_page"), {
 			// defaulting your settings values
 			userId,
 			workout: false,
 			clock: true,
 			sports: true,
+			startLocation: '',
+			endLocation: '',
+			workoutMode: false,
+			workoutType: 'general'
 		});
 	} catch (e) {
 		return false;
@@ -67,10 +75,47 @@ const createSettingsForUser = async (userId) => {
 const addCalendarEvents = async (userId, calendarInfo) => {
 	const docRef = doc(firestore, "users", userId);
 
-	return setDoc(docRef, { calendarInfo });
+	return updateDoc(docRef, { calendarInfo });
+};
+
+const addPhotoLink = async (userId, photoLink) => {
+	const docRef = doc(firestore, "users", userId);
+
+	return updateDoc(docRef, { photoUrl: photoLink });
+};
+
+const updateName = async (userId, userName) => {
+	const docRef = doc(firestore, "users", userId);
+
+	return updateDoc(docRef, { name: userName });
 };
 
 const getCalendarInfo = async (userId) => {
+	const usersRef = doc(firestore, "users", userId);
+
+	const snapshot = await getDoc(usersRef);
+
+	if (snapshot.exists()) {
+		return snapshot.data();
+	}
+
+	console.log("SNAPSHOT DOESN'T EXIST!");
+	return null;
+};
+
+const createUserIfNotExists = async (userId) => {
+	const usersRef = doc(firestore, "users", userId);
+
+	const snapshot = await getDoc(usersRef);
+
+	if (snapshot.exists()) {
+		return;
+	} else {
+		return setDoc(doc(firestore, "users", userId), {});
+	}
+};
+
+const getUser = async (userId) => {
 	const usersRef = doc(firestore, "users", userId);
 
 	const snapshot = await getDoc(usersRef);
@@ -97,12 +142,43 @@ const getSettingsByUserId = async (userId) => {
 	}
 };
 
+const updateUserLayout = async (userId, layout) => {
+	const docRef = doc(firestore, "users", userId);
+
+	return updateDoc(docRef, { layout: layout });
+}
+
+const updateSettingsValueForUser = async (userId, settingsObject) => {
+	const q = query(
+		collection(firestore, "settings_page"),
+		where("userId", "==", userId)
+	);
+
+	const querySnapshot = await getDocs(q);
+	try {
+		const result = await setDoc(querySnapshot.docs[0].ref, settingsObject, {
+			merge: true,
+		});
+		console.log("result", result);
+		return true;
+	} catch (e) {
+		console.log(e);
+		return false;
+	}
+};
 export {
 	signInWithGoogle,
 	getSettingsByUserId,
 	createSettingsForUser,
 	getCalendarInfo,
+	getUser,
+	createUserIfNotExists,
 	addCalendarEvents,
+	addPhotoLink,
+	updateName,
 	firestore,
+	updateSettingsValueForUser,
 	auth,
+	storage,
+	updateUserLayout
 };
