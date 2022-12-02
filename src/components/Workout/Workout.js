@@ -180,9 +180,9 @@ const workout_map = {
 	},
 };
 
-const WORKOUT_DURATION = 1; // 60 Second Workouts
-const NORMAL_REST_DURATION = 1; // 30 second rest
-const BREAK_REST_DURATION = 1;
+const WORKOUT_DURATION = 60; // 60 Second Workouts
+const NORMAL_REST_DURATION = 30; // 30 second rest
+const BREAK_REST_DURATION = 60;
 
 function Workout({ workoutType, uid }) {
 	console.log(workoutType);

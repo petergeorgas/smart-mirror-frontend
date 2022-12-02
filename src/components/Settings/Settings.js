@@ -79,7 +79,7 @@ function Settings() {
 
 	const onStopWorkoutClick = () => {
 		if (workoutMode) {
-			fetch("http://localhost:8080/face", {
+			fetch(`http://${process.env.NEXT_PUBLIC_API_URL}:8080/face`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -109,7 +109,7 @@ function Settings() {
 	const onStartWorkoutClick = () => {
 		if (workoutType) {
 			console.log(workoutType);
-			fetch("http://localhost:8080/face", {
+			fetch(`http://${process.env.NEXT_PUBLIC_API_URL}:8080/face`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
