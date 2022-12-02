@@ -10,7 +10,7 @@ import Workout from "../../src/components/Workout/Workout";
 
 export default function WorkoutPage() {
 	const router = useRouter();
-	const { workout } = router.query;
+	const { workout, uid } = router.query;
 
 	if (workout) {
 		return (
@@ -23,7 +23,7 @@ export default function WorkoutPage() {
 					alignItems="center"
 					bg="black"
 				>
-					<Workout workoutType={workout} />
+					<Workout workoutType={workout} uid={uid} />
 				</Flex>
 			</WebSocket>
 		);
