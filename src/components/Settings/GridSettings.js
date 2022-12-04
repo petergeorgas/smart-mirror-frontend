@@ -27,6 +27,7 @@ const componentMap = {
     calendar: "Calendar",
     map: "Destination ",
     schedules: "Football Schedule",
+    weather: "Weather",
     default: "None"
   };
 
