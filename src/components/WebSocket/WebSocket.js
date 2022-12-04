@@ -51,6 +51,11 @@ function WebSocket(props) {
 							messageData.id === "generalworkout"))
 				) {
 					router.push(`/workout/${splitName[0]}?uid=${splitName[1]}`);
+				} else if (
+					messageData.name === "reloadlayout" &&
+					messageData.id === "reloadlayout"
+				) {
+					location.reload();
 				} else {
 					router.push(`/hello/${messageData.name}?uid=${messageData.id}`);
 				}
