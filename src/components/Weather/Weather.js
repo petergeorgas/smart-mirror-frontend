@@ -8,8 +8,8 @@ import cloudy from './Images/cloudy.png';
 import fog from './Images/fog.png';
 import partlyCloudyDay from './Images/partly_cloudy_day.png';
 import parytlyCloudyNight from './Images/partly_cloudy_night.png';
-import rainy from './Images/rain.png';
-import snowy from './Images/snow.png';
+import rainy from './Images/rainy.png';
+import snowy from './Images/snowy.png';
 import thunderstorm from './Images/thunderstorm.png';
 import Image from "next/image";
 
@@ -71,7 +71,7 @@ function Weather() {
   return (
     <div>
       <Text fontWeight="bold" fontSize={"4xl"} color="white">
-        {compliment}
+        {tempature}
       </Text>
       <Image src={image}/>
     </div>
