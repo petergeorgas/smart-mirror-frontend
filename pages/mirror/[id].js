@@ -10,6 +10,7 @@ import Map from "../../src/components/Map/Map";
 import Schedules from "../../src/components/Schedules/Schedules";
 import Cat from "../../src/components/CatImage/catimage";
 import WebSocket from "../../src/components/WebSocket/WebSocket";
+import Weather from "../../src/components/Weather/Weather";
 
 const componentMap = {
 	clock: <Clock />,
@@ -18,6 +19,7 @@ const componentMap = {
 	calendar: <Calendar />,
 	map: <Map />,
 	schedules: <Schedules />,
+	weather: <Weather />,
 };
 
 export default function MirrorPage() {

@@ -21,14 +21,15 @@ import { useState, useEffect } from "react";
 import { getUser, updateUserLayout } from "../../firebase/firebase";
 
 const componentMap = {
-	clock: "Clock",
-	cat: "Cat Images",
-	compliment: "Compliment Generator",
-	calendar: "Calendar",
-	map: "Destination ",
-	schedules: "Football Schedule",
-	default: "None",
-};
+    clock: "Clock",
+    cat: "Cat Images",
+    compliment: "Compliment Generator",
+    calendar: "Calendar",
+    map: "Destination ",
+    schedules: "Football Schedule",
+    weather: "Weather",
+    default: "None"
+  };
 
 const GridSettings = (props) => {
 	const { uid } = props;
