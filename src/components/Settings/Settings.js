@@ -22,6 +22,8 @@ import {
   createUserIfNotExists,
   updateSettingsValueForUser,
   getSettingsByUserId,
+  getUser,
+  updateUserSettings,
 } from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -45,14 +47,12 @@ function Settings() {
     console.log(user);
     if (!loading && !error && user) {
       createUserIfNotExists(user.uid)
-        .then(() => {
-          return getSettingsByUserId(user.uid);
-        })
-        .then((settings) => {
+        .then(() => getUser(user.uid))
+        .then((user) => {
           setShowSettings(true);
-          setStartLocation(settings.startLocation);
-          setEndLocation(settings.endLocation);
-          setWorkoutMode(settings.workoutMode);
+          setStartLocation(user?.startLocation);
+          setEndLocation(user?.endLocation);
+          setWorkoutMode(user?.workoutMode);
           //setWorkoutType(settings.workoutType);
           setShowSettings(true);
         });
@@ -67,14 +67,12 @@ function Settings() {
 
   // get settings object
 
-  const updateSettingsState = async (settingsObject) => {
-    const success = await updateSettingsValueForUser(user.uid, settingsObject);
-    console.log("success", success);
-    if (success) {
-      return success;
-    } else {
-      alert("It broke!");
-    }
+  const updateSettingsState = (settingsObject) => {
+    updateUserSettings(user.uid, settingsObject)
+      .then(() => {
+        console.log("Successfully updated!");
+      })
+      .catch((err) => console.log(err));
   };
 
   const onStopWorkoutClick = () => {
