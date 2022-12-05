@@ -71,7 +71,7 @@ function Weather() {
   return (
     <div>
       <Text fontWeight="bold" fontSize={"4xl"} color="white">
-        {tempature}
+        {temperature}
       </Text>
       <Image src={image}/>
     </div>
