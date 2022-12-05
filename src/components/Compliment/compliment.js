@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import React from "react";
-import { Text } from "@chakra-ui/react";
+import { Text, Center } from "@chakra-ui/react";
 
 var url;
 
@@ -26,11 +26,11 @@ function Compliment() {
   }, []);
 
   return (
-    <div>
+    <Center>
       <Text fontWeight="bold" fontSize={"4xl"} color="white">
         {compliment}
       </Text>
-    </div>
+    </Center>
   );
 }
 
