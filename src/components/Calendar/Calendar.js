@@ -88,9 +88,9 @@ function Calendar() {
 
 	if (events.length == 1) {
 		return (
-			<div className="App pt-4">
+			<Text fontWeight="bold" fontSize={"4xl"} color="white">
 				No upcoming events!
-			</div>
+			</Text>
 		);
 	}
 	i = 0;
