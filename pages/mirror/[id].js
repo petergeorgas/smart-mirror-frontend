@@ -62,13 +62,13 @@ export default function MirrorPage() {
 
   const components = boxes.map((item, i) => {
     if (item === "default") {
-      return <Box key={i} bg="black" h="478px"></Box>;
+      return <Box key={i} bg="black" h="476px"></Box>;
     } else {
       return (
         <Box
           key={i}
           bg="black"
-          h="478px"
+          h="476px"
           display="flex"
           justifyContent="center"
           alignItems="center"
