@@ -47,7 +47,7 @@ function Calendar() {
 	}, [user]);
 
 		while (calInfo != undefined) {
-			if (calInfo[i] == undefined) {
+			if (calInfo[i] === undefined) {
 				break;
 			}
 			if (moment(mcurrentdate).isBefore(moment(calInfo[i].start.dateTime))) {
@@ -75,7 +75,7 @@ function Calendar() {
 		events[k] = list[k-1].event;
 		startdate[k] = moment(list[k-1].start).format('ddd, MMM D, h:mm a');
 		enddate[k] = moment(list[k-1].end).format('ddd, MMM D, h:mm a');
-		if (k == 5) {
+		if (k === 5) {
 			events.length = 6;
 			startdate.length = 6;
 			enddate.length = 6;
@@ -86,7 +86,7 @@ function Calendar() {
 	
 
 
-	if (events.length == 1) {
+	if (events.length === 1) {
 		return (
 			<Text fontWeight="bold" fontSize={"4xl"} color="white">
 				No upcoming events!
