@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\pages",
-    "\\pages\\api",
-    "\\pages\\api\\auth",
-    "\\pages\\api\\rss",
-    "\\pages\\hello",
-    "\\public",
+    "\\pages\\mirror",
     "\\src",
     "\\src\\components",
-    "\\src\\components\\WebSocket"
+    "\\src\\components\\CatImage",
+    "\\src\\components\\Clock",
+    "\\src\\components\\Compliment",
+    "\\src\\components\\Schedules",
+    "\\src\\components\\Settings"
   ],
-  "SelectedNode": "\\pages\\mirror\\[id].js",
+  "SelectedNode": "\\src\\components\\Calendar\\Calendar.js",
   "PreviewInSolutionExplorer": false
 }
