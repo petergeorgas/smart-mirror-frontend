@@ -6,11 +6,15 @@ import { GoogleAuthProvider } from "firebase/auth";
 import Moment from 'moment';
 import {
 	Center,
-	Spacer,
 	Box,
 	Text,
 	VStack,
-	HStack
+	HStack,
+	List,
+	ListItem,
+	Grid,
+	GridItem
+
 } from '@chakra-ui/react';
 
 function Calendar() {
@@ -75,10 +79,10 @@ function Calendar() {
 		events[k] = list[k-1].event;
 		startdate[k] = moment(list[k-1].start).format('ddd, MMM D, h:mm a');
 		enddate[k] = moment(list[k-1].end).format('ddd, MMM D, h:mm a');
-		if (k === 5) {
-			events.length = 6;
-			startdate.length = 6;
-			enddate.length = 6;
+		if (k == 4) {
+			events.length = 5;
+			startdate.length = 5;
+			enddate.length = 5;
 			break;
 		}
 	}
@@ -95,47 +99,34 @@ function Calendar() {
 	}
 	i = 0;
 	return (
+		<Box w='100%' h='100%' padding = '2%'>
+			<VStack>
+			<Box h='5%' fontSize={"2xl"} fontWeight="bold" textAlign="center">
+			Upcoming Events
+			</Box>
 
-		<Box
-			border="0px"
-			borderColor="gray.300"
-			borderRadius="md"
-			bg="black"
-			color="white"
-			w="480px"
-			h="480px"
-			padding="30"
-		>
+			<Grid h='100%' templateColumns='repeat(7, 1fr)' gap={4}>
 
-			<VStack spacing='30px'>
-			<Center>
-				Upcoming Events
-			</Center>
-			<HStack spacing='30px'>
+				<GridItem colSpan={1}>
+				{events.map((events) => (
+					<Box w='100%' h='25%' fontWeight="bold" fontSize={"2xl"} key={events} textAlign="center"><Center>{events}</Center></Box>
+				))}
 
-			<VStack spacing='40px'>
-			{events.map((events) => (
-				<div key={events}>{events}</div>
-			))}
+			</GridItem>
+			<GridItem colSpan={3}>
+						{startdate.map((startdate) => (
+							<Box w='100%' h='25%' fontWeight="bold" fontSize={"2xl"} key={startdate} textAlign = "center"><Center>{startdate}</Center></Box>
+					))}
+			</GridItem>
+			<GridItem colSpan={3}>
+				{enddate.map((enddate) => (
+					<Box w='100%' h='25%' fontWeight="bold" fontSize={"2xl"} key={enddate} textAlign="center"><Center>{enddate}</Center></Box>
+				))}
+			</GridItem>
 
-				</VStack>
-			<VStack spacing='40px'>
-			{startdate.map((startdate) => (
-				<div key={startdate}>{startdate}</div>
-			))}
-
+			</Grid>
 			</VStack>
-			<VStack spacing='40px'>
-			{enddate.map((enddate) => (
-			<div key={enddate}>{enddate}</div>
-			))}
-					 
-			</VStack>
-				</HStack>
-				</VStack>
-
-		</Box>
-
+			</Box>
 	);
 }
 

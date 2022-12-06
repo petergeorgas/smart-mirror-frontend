@@ -18,20 +18,16 @@ import {
 
 import { Axios } from "axios";
 
-const options = {
-    method: "GET",
-    url: "https://nfl-schedule.p.rapidapi.com/v1/schedules",
-    headers: {
-        "X-RapidAPI-Key": "994b9686b6msh686468f028a70b5p126bb5jsn3e737efb88dd",
-        "X-RapidAPI-Host": "nfl-schedule.p.rapidapi.com",
-    },
-};
+
+
+
 
 function Schedules() {
     const [AllInfo, setAllInfo] = React.useState(null);
     const [GameCounter, setGameCounter] = React.useState(0);
     const count = React.useRef(0);
 
+/*
     useEffect(() => {
         fetch(options.url, { headers: options.headers })
             .then((resp) => resp.json())
@@ -43,7 +39,7 @@ function Schedules() {
                 console.log(err);
             });
     }, []);
-
+     
     useEffect(() => {
         if (AllInfo != null) {
             setInterval(() => {
@@ -57,6 +53,27 @@ function Schedules() {
             }, 10000);
         }
     }, [AllInfo]);
+    */
+    if (AllInfo == null) {
+        return (
+
+            <Box
+                border="0px"
+                borderColor="gray.300"
+                borderRadius="md"
+                bg="black"
+                color="white"
+                w="100%"
+                h="100%"
+                padding="10"
+            >
+                <Center>
+                Nothing to display
+                </Center>
+                </Box>
+            
+            )
+    }
 
     return (
         
@@ -66,8 +83,8 @@ function Schedules() {
                 borderRadius="md"
                 bg="black"
                 color="white"
-                w="480px"
-                h="480px"
+                w="100%"
+                h="100%"
                 padding="10"
             >
                 <VStack spacing={6} align="stretch">
