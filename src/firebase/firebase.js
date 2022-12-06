@@ -128,6 +128,12 @@ const getUser = async (userId) => {
   return null;
 };
 
+const snapshot = (userId, callBack) => {
+  const usersRef = doc(firestore, "users", userId);
+
+  return getDoc(usersRef).onSnapshot(() => callBack);
+};
+
 const getSettingsByUserId = async (userId) => {
   const q = query(
     collection(firestore, "settings_page"),
@@ -183,6 +189,7 @@ export {
   addCalendarEvents,
   addPhotoLink,
   updateName,
+  snapshot,
   firestore,
   updateSettingsValueForUser,
   auth,
