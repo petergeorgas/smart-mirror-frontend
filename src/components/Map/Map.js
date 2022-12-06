@@ -57,10 +57,18 @@ function Map() {
     return (
             <Box
                 as="iframe"
+                title="Work Route"
+                border="2px"
+                borderColor="red"
+                borderRadius="5"
                 bg="black"
                 color="white"
-                h='100%'
-                w='100%'
+                w="100%"
+                h="100%"
+                padding="5"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen=""
                 src={srcstring}
             >
             </Box>
