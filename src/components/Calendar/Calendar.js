@@ -101,7 +101,7 @@ function Calendar() {
 	return (
 		<Box w='100%' h='100%' padding = '2%'>
 			<VStack>
-			<Box h='5%' fontSize={"2xl"} fontWeight="bold" textAlign="center">
+			<Box h='5%' fontSize={"2xl"} fontWeight="bold" textAlign="center" color="white">
 			Upcoming Events
 			</Box>
 
@@ -109,18 +109,18 @@ function Calendar() {
 
 				<GridItem colSpan={1}>
 				{events.map((events) => (
-					<Box w='100%' h='25%' fontWeight="bold" fontSize={"2xl"} key={events} textAlign="center"><Center>{events}</Center></Box>
+					<Box w='100%' h='25%' fontWeight="bold" fontSize={"2xl"} key={events} textAlign="center" color="white"><Center>{events}</Center></Box>
 				))}
 
 			</GridItem>
 			<GridItem colSpan={3}>
 						{startdate.map((startdate) => (
-							<Box w='100%' h='25%' fontWeight="bold" fontSize={"2xl"} key={startdate} textAlign = "center"><Center>{startdate}</Center></Box>
+							<Box w='100%' h='25%' fontWeight="bold" fontSize={"2xl"} key={startdate} textAlign = "center" color="white"><Center>{startdate}</Center></Box>
 					))}
 			</GridItem>
 			<GridItem colSpan={3}>
 				{enddate.map((enddate) => (
-					<Box w='100%' h='25%' fontWeight="bold" fontSize={"2xl"} key={enddate} textAlign="center"><Center>{enddate}</Center></Box>
+					<Box w='100%' h='25%' fontWeight="bold" fontSize={"2xl"} key={enddate} textAlign="center" color="white"><Center>{enddate}</Center></Box>
 				))}
 			</GridItem>
 
