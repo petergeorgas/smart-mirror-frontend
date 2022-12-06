@@ -14,6 +14,7 @@ function Cat() {
       src="https://cataas.com/cat/says/%20"
       margin=""
       padding="5"
+      borderRadius="5px"
     />
   );
 }

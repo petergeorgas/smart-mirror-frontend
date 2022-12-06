@@ -10,26 +10,23 @@ function Map() {
     const srcstring = `https://www.google.com/maps/embed/v1/directions?origin=place_id:${originid}&destination=place_id:${destid}&key=AIzaSyBzkJwRb9PUctHdPWU66dVgX6lpY288Fts `;
 
     return (
-        <div bg="gray" h="100vh">
             <Box
                 as="iframe"
                 title="Work Route"
                 border="2px"
-                borderColor="gray.300"
-                borderRadius="md"
+                borderColor="red"
+                borderRadius="5"
                 bg="black"
                 color="white"
-                w="480px"
-                h="480px"
-                padding="0"
+                w="100%"
+                h="100%"
+                padding="5"
                 style={{ border: 0 }}
                 loading="lazy"
                 allowFullScreen=""
                 src={srcstring}
-
             >
             </Box>
-        </div>
     );
 }
 
