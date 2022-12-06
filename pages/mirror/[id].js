@@ -5,12 +5,18 @@ import { useState, useEffect } from "react";
 import Clock from "../../src/components/Clock/Clock";
 import Compliment from "../../src/components/Compliment/compliment";
 import Calendar from "../../src/components/Calendar/Calendar";
-import { getUser, updateUserLayout } from "../../src/firebase/firebase";
+import {
+  firestore,
+  getUser,
+  snapshot,
+  updateUserLayout,
+} from "../../src/firebase/firebase";
 import Map from "../../src/components/Map/Map";
 import Schedules from "../../src/components/Schedules/Schedules";
 import Cat from "../../src/components/CatImage/catimage";
 import WebSocket from "../../src/components/WebSocket/WebSocket";
 import Weather from "../../src/components/Weather/Weather";
+import { doc, onSnapshot } from "firebase/firestore";
 
 const componentMap = {
   clock: <Clock />,
@@ -53,6 +59,18 @@ export default function MirrorPage() {
       });
     }
   }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      const userRef = doc(firestore, "users", id);
+      const snap = onSnapshot(userRef, (doc) => {
+        console.log("snapshot detected!");
+        console.log(doc.data().layout);
+        setBoxes(doc.data().layout);
+      });
+      return snap;
+    }
+  }, [id, setBoxes]);
 
   const editPrompt = (
     <Center>
